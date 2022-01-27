@@ -1,0 +1,36 @@
+.header {
+  min-height: 74px;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+	margin: 0 auto;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  border-bottom: 1px solid #545454;
+	opacity: 0.7;
+  top: 74px;
+  left: 0;
+  width: 100%;
+}
+
+@media screen and (max-width: 980px) {
+  .header {
+    min-height: 56px;
+		margin: 0 auto;
+		max-width: 580px;
+  }
+
+  .header::before {
+    top: 56px;
+		width: 100%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+	.header {
+		max-width: 320px;
+	}
+}

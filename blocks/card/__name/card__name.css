@@ -1,0 +1,7 @@
+.card__name {
+	display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+}

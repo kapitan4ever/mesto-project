@@ -1,0 +1,10 @@
+.page__section {
+	max-width: 880px;
+  margin: auto;
+}
+
+@media screen and (max-width: 980px) {
+  .page__section {
+    width: 100%;
+  }
+}
