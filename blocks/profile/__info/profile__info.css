@@ -1,5 +1,6 @@
 .profile__info {
-	display: flex;
-	flex-direction: row;
-	align-items: baseline;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  position: relative;
 }

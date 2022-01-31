@@ -1,8 +1,7 @@
 .card {
-	max-width: 282px;
-	max-height: 361px;
-	background: #FFFFFF;
+  max-width: 282px;
+  background: #FFFFFF;
   border-radius: 10px;
-	overflow: hidden;
-	position: relative;
+  overflow: hidden;
+  position: relative;
 }
