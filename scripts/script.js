@@ -92,13 +92,28 @@ initialCards.forEach(function (element) {
 });
 
 //сохранение новой карточки места
+
+//функция редактирования профиля
+//const formElement = document.querySelector('.form');// Находим форму в DOM
 const formPlace = page.querySelector('.form_type_place');
-const inputPlace = formPlace.querySelector('.form__input_type_place');
-const inputLink = formPlace.querySelector('.form__input_type_link');
 
-formPlace.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const newCard = createCard(inputLink.value, inputPlace.value);
-  console.log(newCard);
+function formSubmitCard(evt) {
+  evt.preventDefault();// Эта строчка отменяет стандартную отправку формы.
 
-})
+  //let nameInput = formPlace.querySelector('.form__input_type_name');
+  //let jobInput = formPlace.querySelector('.form__input_type_about');
+  const inputPlace = formPlace.querySelector('.form__input_type_place');
+  const inputLink = formPlace.querySelector('.form__input_type_link');
+
+  //let profileName = document.querySelector('.profile__title');
+  //let profileDescription = document.querySelector('.profile__description');
+  const cardTitle = document.querySelector('.card__title');
+  const cardLink = document.querySelector('.card__photo');
+
+  cardTitle.textContent = inputPlace.value;// Вставьте новые значения с помощью textContent
+  cardLink.textContent = inputLink.value;// Вставьте новые значения с помощью textContent
+
+}
+
+formPlace.addEventListener('submit', formSubmitCard);
+formPlace.addEventListener('submit', hidePopupProfile);
