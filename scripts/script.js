@@ -124,6 +124,9 @@ function formSubmitCard(evt) {
   createElement.querySelector('.card__photo').src = inputLink.value;
   createElement.querySelector('.card__title').textContent = inputPlace.value;
   createElement.querySelector('.card__photo').alt = inputPlace.value;
+	popupFullsize.querySelector('.popup__image').src = inputLink.value;
+  popupFullsize.querySelector('.popup__image').alt = inputPlace.value;
+  popupFullsize.querySelector('.popup__place').textContent = inputPlace.value;
   // удаление карточки
   const cardRemove = createElement.querySelector('.card__remove');
   cardRemove.addEventListener('click', () => {
@@ -137,9 +140,7 @@ function formSubmitCard(evt) {
   // увеличение по клику
   createElement.querySelector('.card__photo').addEventListener('click', () => {
     popupFullsize.classList.add('popup_opened');
-    popupFullsize.querySelector('.popup__image').src = inputLink.value;
-    popupFullsize.querySelector('.popup__image').alt = inputPlace.value;
-    popupFullsize.querySelector('.popup__place').textContent = inputPlace.value;
+
   });
   // закрытие картики fullsize
   const closeImg = document.querySelector('.popup__close_img');
