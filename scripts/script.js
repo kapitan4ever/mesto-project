@@ -15,6 +15,9 @@ const jobInput = formElement.querySelector('.form__input_type_about');
 const profileName = page.querySelector('.profile__title');
 const profileDescription = page.querySelector('.profile__description');
 const formPlace = document.querySelector('.form_type_place');
+const popupImage = popupFullsize.querySelector('.popup__image');
+const popupPlace = popupFullsize.querySelector('.popup__place');
+const closeImg = document.querySelector('.popup__close_img');
 
 const initialCards = [
   {
@@ -53,9 +56,9 @@ function closePopup(popup) {
 
 //профиль
 profileEdit.addEventListener('click', () => {
-  openPopup(popupProfile);
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
+  openPopup(popupProfile);
 });
 
 popupClose.addEventListener('click', () => {
@@ -100,18 +103,12 @@ function createCard(name, link) {
 
   // увеличение по клику
   cardPhoto.addEventListener('click', () => {
-    const popupImage = popupFullsize.querySelector('.popup__image');
-    const popupPlace = popupFullsize.querySelector('.popup__place');
     popupImage.src = link;
     popupImage.alt = name;
     popupPlace.textContent = name;
     openPopup(popupFullsize);
   });
-  // закрытие картики fullsize
-  const closeImg = document.querySelector('.popup__close_img');
-  closeImg.addEventListener('click', () => {
-    closePopup(popupFullsize);
-  });
+
 
   return cardElement;
 };
@@ -132,3 +129,8 @@ initialCards.forEach(card => {
 });
 
 formElement.addEventListener('submit', submitFormHandler);
+
+// закрытие картики fullsize
+closeImg.addEventListener('click', () => {
+  closePopup(popupFullsize);
+});
