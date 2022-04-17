@@ -1,0 +1,24 @@
+{
+  "name": "mesto-project",
+  "version": "1.0.0",
+  "description": "mesto-project with webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kapitan4ever/mesto-project.git"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "webpack"
+  ],
+  "author": "Stanislav <stklmn@ya.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kapitan4ever/mesto-project/issues"
+  },
+  "homepage": "https://github.com/kapitan4ever/mesto-project#readme"
+}

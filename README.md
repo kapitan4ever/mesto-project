@@ -9,4 +9,4 @@
 (https://kapitan4ever.github.io/mesto-project/)
 
 ## Стэк
-html, css, БЭМ, pixelperfect
+html, css, БЭМ, pixelperfect, javascript
