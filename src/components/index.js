@@ -7,7 +7,6 @@ import {
   formPlace, initialCards, popups, formProfile, nameInput, jobInput, validationSettings
 } from './utils';
 import { createCard, addCard } from './card.js';
-import { fillProfileInputs, handleProfileFormSubmit, hideErorrs } from './profile.js';
 
 //закрытие модального окна по клику
 popups.forEach((popup) => {
