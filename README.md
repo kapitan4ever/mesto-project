@@ -5,8 +5,5 @@
 [Макет](https://www.figma.com/file/6O4811T8kDFAjnIPfnQbdq/JavaScript.-Sprint-4-(Copy)?node-id=28212%3A155) в Figma
 В верстке использовал flex, grid для расположения блоков и элементов согласно макета. Основное отличие от первых работ это создание форм для загрузки фотографий и подписей к ним. Для просмотра проекта перейдите по ссылке ниже)
 
-## Ссылка на проект
-(https://kapitan4ever.github.io/mesto-project/)
-
 ## Стэк
-html, css, БЭМ, pixelperfect, javascript
+html, css, БЭМ, pixelperfect, javascript, webpack
