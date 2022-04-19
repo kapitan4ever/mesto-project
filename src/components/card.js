@@ -1,4 +1,4 @@
-import { cardTemplate, popupFullsize, popupImage, popupPlace, popupCard, formPlace} from './utils';
+import { cardTemplate, popupFullsize, popupImage, popupPlace} from './utils';
 import { openPopup } from './modal';
 
 //функция добавления карточек
