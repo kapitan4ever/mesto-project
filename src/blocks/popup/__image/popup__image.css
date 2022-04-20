@@ -4,4 +4,5 @@
   min-width: 240px;
   min-height: 299px;
   object-fit: cover;
+  border-radius: 10px;
 }
