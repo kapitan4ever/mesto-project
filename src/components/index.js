@@ -4,7 +4,7 @@ import { openPopup, closePopup } from './modal';
 import {
   popupProfile, popupCard, profileEdit,
   profileAddButton, profileName, profileDescription, cards,
-  formPlace, initialCards, popups, formProfile, nameInput, jobInput, validationSettings
+  formPlace, createCardButton, initialCards, popups, formProfile, nameInput, jobInput, validationSettings
 } from './utils';
 import { createCard, addCard } from './card.js';
 
@@ -42,6 +42,8 @@ formPlace.addEventListener('submit', function (evt) {
   evt.preventDefault();
   addCard(cards, createCard(formPlace.name.value, formPlace.link.value));
   formPlace.reset();
+  createCardButton.classList.add('popup__button_disabled');
+  createCardButton.disabled = true;
   closePopup(popupCard);
 });
 

@@ -6,7 +6,7 @@ export const validationSettings = {
     submitButtonSelector: '.form__submit',
     inactiveButtonClass: 'popup__button_disabled',
     inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_visible'
+    errorClass: 'popup__input-error_active'
 };
 //profile
 export const profileEdit = page.querySelector('.profile__edit');
@@ -22,6 +22,7 @@ export const popupClose = page.querySelector('.popup__close');
 export const popupCard = page.querySelector('.popup__card');
 export const popupCloseCard = popupCard.querySelector('.popup__close_card');
 export const formPlace = document.querySelector('.form_type_place');
+export const createCardButton = popupCard.querySelector('.form__submit[name=create-card-button]');
 //form
 export const formElement = page.querySelector('.form');
 export const formInput = formElement.querySelector('.form__input');
