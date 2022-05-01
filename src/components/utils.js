@@ -17,7 +17,6 @@ export const profileDescription = page.querySelector('.profile__description');
 export const formProfile = document.forms.edit_profile;
 export const popupProfile = page.querySelector('.popup__profile');
 export const popupClose = page.querySelector('.popup__close');
-
 //popup card
 export const popupCard = page.querySelector('.popup__card');
 export const popupCloseCard = popupCard.querySelector('.popup__close_card');
@@ -26,39 +25,16 @@ export const createCardButton = popupCard.querySelector('.form__submit[name=crea
 //form
 export const formElement = page.querySelector('.form');
 export const formInput = formElement.querySelector('.form__input');
-export const nameInput = formElement.querySelector('.form__input_type_name');
-export const jobInput = formElement.querySelector('.form__input_type_about');
+export const nameInput = formElement.querySelector('.form__input[name=name]');
+export const jobInput = formElement.querySelector('.form__input[name=description]');
 //popup image
 export const popupFullsize = page.querySelector('#fullsize');
 export const popupImage = popupFullsize.querySelector('.popup__image');
 export const popupPlace = popupFullsize.querySelector('.popup__place');
 export const closeImg = document.querySelector('.popup__close_img');
 //default card
-export const cards = page.querySelector('.cards');
+export const cardsContainer = page.querySelector('.cards');
 export const cardTemplate = document.querySelector('.card-template').content;
-export const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+//api
+export const API_URL = 'https://nomoreparties.co/v1/plus-cohort-9'
+export const token = 'a4afe3fb-fc08-4be7-8f57-5e8ad24d8399'

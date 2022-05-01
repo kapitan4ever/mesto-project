@@ -1,23 +1,26 @@
 import { cardTemplate, popupFullsize, popupImage, popupPlace} from './utils';
 import { openPopup } from './modal';
+import { deleteCard, printError } from './api';
 
-//функция добавления карточек
-export function createCard(name, link) {
+
+//function add cards
+export function createCard(name, link, id) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitle = cardElement.querySelector('.card__title');
   const cardPhoto = cardElement.querySelector('.card__photo');
-  const likeHeart = cardElement.querySelector('.card__like');
   const cardRemove = cardElement.querySelector('.card__remove');
 
   cardTitle.textContent = name;
   cardPhoto.src = link;
   cardPhoto.alt = name;
-  likeHeart.addEventListener('click', function () {
-    likeHeart.classList.toggle('card__like_active');
-  });
+
   cardRemove.addEventListener('click', function () {
-    const cardItem = cardRemove.closest('.card');
-    cardItem.remove();
+    deleteCard(id)
+    .then(() => {
+      const cardItem = cardRemove.closest('.card');
+      cardItem.remove();
+    })
+    .catch(printError)
   });
 
   // увеличение по клику
@@ -31,8 +34,6 @@ export function createCard(name, link) {
   return cardElement;
 };
 
-export function addCard(cards, cardElement) {
-  cards.prepend(cardElement);
-}
+
 
 

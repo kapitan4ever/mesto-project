@@ -19,12 +19,12 @@
         <img src="<%=require('./images/Avatar.jpg')%>" alt="Аватар" class="profile__image">
         <div class="profile__user">
           <div class="profile__info">
-            <h1 class="profile__title">Жак-Ив Кусто</h1>
-            <button type="button" class="button profile__edit"></button>
+            <h1 class="profile__title"></h1>
+            <button type="button" class="button profile__edit" name="edit-profile-button"></button>
           </div>
-          <p class="profile__description">Исследователь океана</p>
+          <p class="profile__description"></p>
         </div>
-        <button type="button" class="button profile__add-button"></button>
+        <button type="button" class="button profile__add-button" name="add-card-button"></button>
       </section>
       <section class="cards page__section">
       </section>
@@ -61,7 +61,7 @@
           <input type="url" name="link" class="form__input form__input_type_link" id="link"
             placeholder="Ссылка на картинку" required>
           <span class="popup__input-error link-error"></span>
-          <button type="submit" class="button form__button form__submit" name="create-card-button">Создать</button>
+          <button type="submit" class="button form__button form__submit popup__button_create" name="create-card-button">Создать</button>
         </form>
       </div>
     </div>

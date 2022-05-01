@@ -13,8 +13,3 @@
 .card__like:hover {
   opacity: .5;
 }
-
-.card__like_active {
-  background: center no-repeat url(./../../../images/unionactive.svg);
-  opacity: 1;
-}
