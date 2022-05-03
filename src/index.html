@@ -48,7 +48,7 @@
           <input type="text" id="description" name="description" class="form__input form__input_type_about"
             minlength="2" maxlength="200" placeholder="Исследователь океана" required>
           <span class="popup__input-error description-error" id="description-error"></span>
-          <button type="submit" class="button form__button form__submit">Сохранить</button>
+          <button type="submit" class="button form__button form__submit popup__button_create">Сохранить</button>
         </form>
       </div>
     </div>
@@ -60,8 +60,9 @@
           <h3 class="popup__title">Обновить аватар</h3>
           <input type="url" name="avatar-link" class="form__input form__input_type_link" id="avatar-link"
             placeholder="Ссылка на аватар" required>
-          <span class="popup__input-error link-error avatar-link-error" id="avatar-link-error" name="avatar-link-error"></span>
-          <button type="submit" class="button form__button form__submit" id="save-avatar"
+          <span class="popup__input-error link-error avatar-link-error" id="avatar-link-error"
+            name="avatar-link-error"></span>
+          <button type="submit" class="button form__button form__submit popup__button_create" id="save-avatar"
             name="create-avatar-button">Сохранить</button>
         </form>
       </div>
@@ -100,7 +101,7 @@
       <div class="card__name">
         <h2 class="card__title"></h2>
         <div class="card__like-wrapper">
-          <button type="button" class="button card__like"></button>
+          <button type="button" class="card__like"></button>
           <span class="card__like-counter">0</span>
         </div>
 

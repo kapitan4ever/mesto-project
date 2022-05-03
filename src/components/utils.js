@@ -45,6 +45,4 @@ export const closeImg = document.querySelector('.popup__close_img');
 //default card
 export const cardsContainer = page.querySelector('.cards');
 export const cardTemplate = document.querySelector('.card-template').content;
-//api
-export const API_URL = 'https://nomoreparties.co/v1/plus-cohort-9'
-export const token = 'a4afe3fb-fc08-4be7-8f57-5e8ad24d8399'
+

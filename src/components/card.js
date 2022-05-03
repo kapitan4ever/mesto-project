@@ -1,6 +1,6 @@
 import { cardTemplate, popupFullsize, popupImage, popupPlace } from './utils';
 import { openPopup } from './modal';
-import { deleteCard, printError, addLike, deleteLike, responseCheck } from './api';
+import { deleteCard, printError, addLike, deleteLike } from './api';
 
 
 //function add cards
@@ -45,19 +45,17 @@ export function createCard(name, link, cardId, likesCount, isLiked) {
 export function clickLikeButton(cardLikeButton, cardLikeCount, cardId) {
   if (cardLikeButton.classList.contains('card__like_active')) {
     deleteLike(cardId)
-    .then(responseCheck)
-    .then(res => {
-      cardLikeCount.textContent = res.likes.length;
-      cardLikeButton.classList.remove('card__like_active');
-    })
-    .catch(err => console.error(err))
+      .then(res => {
+        cardLikeCount.textContent = res.likes.length;
+        cardLikeButton.classList.remove('card__like_active');
+      })
+      .catch(err => console.error(err))
   } else {
     addLike(cardId)
-    .then(responseCheck)
-    .then(res => {
-      cardLikeCount.textContent = res.likes.length;
-      cardLikeButton.classList.add('card__like_active');
-    })
-    .catch(err => console.error(err))
+      .then(res => {
+        cardLikeCount.textContent = res.likes.length;
+        cardLikeButton.classList.add('card__like_active');
+      })
+      .catch(err => console.error(err))
   }
 }
