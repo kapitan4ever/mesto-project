@@ -34,7 +34,7 @@ export const hasInvalidInput = (inputList) => {
 
 // Функция принимает массив полей ввода
 // и элемент кнопки, состояние которой нужно менять
-export const toggleButtonState = (inputList, buttonElement, settings) => {
+export function toggleButtonState(inputList, buttonElement, settings) {
   // Если есть хотя бы один невалидный инпут
   if (hasInvalidInput(inputList)) {
     buttonElement.disabled = true;
