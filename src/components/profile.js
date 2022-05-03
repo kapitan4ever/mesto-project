@@ -1,30 +1,30 @@
 import {
   nameInput,
   jobInput,
-  profileEdit,
-  profileAddButton,
   profileName,
   profileDescription,
-  formProfile,
   popupProfile,
-  popupClose,
-  validationSettings
+  validationSettings,
+  popupAvatar,
+  editAvatar,
+  linkAvatar,
+  profileAvatar,
+  createButtonAvatar
 } from './utils.js';
-import { toggleButtonState, setEventListeners } from './validate';
-import {editProfile, responseCheck, renderLoading, printError} from './api.js';
+import { hideInputError } from './validate.js';
+import { editProfile, responseCheck, renderLoading, printError, editAvatarProfile } from './api.js';
 import { closePopup } from './modal.js';
 
 const editPopupButton = popupProfile.querySelector('.form__button');
 
 let user;
-//const nameInput = document.querySelector('#name');
-//const descInput = document.querySelector('#description');
-
 
 export function renderUserData(data) {
   user = data;
   profileName.textContent = data.name;
   profileDescription.textContent = data.about;
+  profileAvatar.src = data.avatar;
+  profileAvatar.alt = `Аватар ${data.name}`;
 }
 
 export function editProfileInfo(evt) {
@@ -40,15 +40,26 @@ export function editProfileInfo(evt) {
     .finally(() => renderLoading(false, editPopupButton))
 }
 
-function setButtonState(form) {
-  const buttonElement = form.querySelector(validationSettings.submitButtonSelector);
-  const inputList = Array.from(form.querySelectorAll(validationSettings.inputSelector));
-  toggleButtonState(buttonElement, inputList, settings);//inputList, buttonElement, settings
+export function editAvatarImg() {
+  const avatarLink = linkAvatar.value;
+  renderLoading(true, editAvatar);
+  editAvatarProfile(avatarLink)
+  .then(responseCheck)
+  .then(res => {
+    profileAvatar.src = res.avatar;
+    createButtonAvatar.classList.add('popup__button_disabled');
+    createButtonAvatar.disabled = true;
+    editAvatar.reset();
+    closePopup(popupAvatar);
+    })
+    .catch(printError)
+    .finally(() => renderLoading(false, editAvatar));
 }
 
-export function fillCurrentInputs(form) {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileDescription.textContent;
-  setButtonState(form);
+export function hideErorrs(popup) {
+  const formElement = popup.querySelector(validationSettings.formSelector);
+  const inputList = formElement.querySelectorAll(validationSettings.inputSelector);
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement, validationSettings);
+  });
 };
-

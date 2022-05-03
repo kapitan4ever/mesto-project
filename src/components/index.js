@@ -3,14 +3,14 @@ import '../pages/index.css';
 import { enableValidation } from './validate.js';
 import { openPopup, closePopup } from './modal.js';
 import {
-  popupProfile, popupCard, popupCloseCard, profileEdit,
-  profileAddButton, profileName, profileDescription, cardsContainer,
+  popupProfile, popupCard, popupAvatar, profileEdit,
+  profileAddButton, cardsContainer,
   formPlace, createCardButton, popups, formProfile,
-  nameInput, jobInput, validationSettings
+  validationSettings, editAvatar, buttonAvatar
 } from './utils';
 import { createCard } from './card.js';
-import { editProfileInfo, renderUserData, fillCurrentInputs} from './profile.js';
-import { getInitialCards, printError, getUserData, postCard, editProfile, renderLoading } from './api.js';
+import { editProfileInfo, renderUserData, hideErorrs, editAvatarImg } from './profile.js';
+import { getInitialCards, printError, getUserData, postCard, renderLoading } from './api.js';
 
 const addPopupButton = popupCard.querySelector('.form__button');
 
@@ -32,6 +32,7 @@ let userId;
 Promise.all([getUserData(), getInitialCards()])
   .then(([userData, cards]) => {
     userId = userData._id;
+
     cards.forEach(card => {
       const initialCards = createCard(card.name, card.link, card._id, card.likes.length, card.likes.some(item => item._id === userId));
       const cardRemove = initialCards.querySelector('.card__remove');
@@ -45,16 +46,15 @@ Promise.all([getUserData(), getInitialCards()])
   .catch(printError);
 
 
-//профиль
+//profile
 profileEdit.addEventListener('click', () => {
-
-    openPopup(popupProfile);
-    fillCurrentInputs(popupProfile);
+  hideErorrs(popupProfile);
+  openPopup(popupProfile);
 });
 
 formProfile.addEventListener('submit', editProfileInfo);
 
-//карточки
+//cards
 profileAddButton.addEventListener('click', () => {
   openPopup(popupCard);
 });
@@ -76,5 +76,16 @@ formPlace.addEventListener('submit', function (evt) {
     .finally(() => renderLoading(false, addPopupButton));
 });
 
-//валидация
+//avatar
+buttonAvatar.addEventListener('click', () => {
+  hideErorrs(popupAvatar);
+  openPopup(popupAvatar);
+});
+
+editAvatar.addEventListener('submit', function(evt) {
+  evt.preventDefault();
+  editAvatarImg();
+});
+
+//validation
 enableValidation(validationSettings);

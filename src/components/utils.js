@@ -1,22 +1,32 @@
 export const page = document.querySelector('.page');
+export const content = page.querySelector('.content');
 export const popups = page.querySelectorAll('.popup');
 export const validationSettings = {
-    formSelector: '.form',
-    inputSelector: '.form__input',
-    submitButtonSelector: '.form__submit',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__input-error_active'
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__submit',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
 };
 //profile
 export const profileEdit = page.querySelector('.profile__edit');
 export const profileAddButton = page.querySelector('.profile__add-button');
 export const profileName = page.querySelector('.profile__title');
 export const profileDescription = page.querySelector('.profile__description');
+export const profileImage = content.querySelector('.profile__image');
 //popup profile
 export const formProfile = document.forms.edit_profile;
 export const popupProfile = page.querySelector('.popup__profile');
 export const popupClose = page.querySelector('.popup__close');
+//avatar
+export const popupAvatar = page.querySelector('.popup__avatar');
+export const editAvatar = document.querySelector('#edit_avatar');
+export const linkAvatar = document.querySelector('#avatar-link');
+export const saveAvatar = popupAvatar.querySelector('#save-avatar');
+export const profileAvatar = document.querySelector('.profile__image');
+export const buttonAvatar = content.querySelector('.profile__avatar-edit');
+export const createButtonAvatar = popupAvatar.querySelector('.form__submit[name=create-avatar-button]');
 //popup card
 export const popupCard = page.querySelector('.popup__card');
 export const popupCloseCard = popupCard.querySelector('.popup__close_card');
