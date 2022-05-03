@@ -1,6 +1,6 @@
 import '../pages/index.css';
 
-import { enableValidation } from './validate.js';
+import { enableValidation, hideErorrs } from './validate.js';
 import { openPopup, closePopup } from './modal.js';
 import {
   popupProfile, popupCard, popupAvatar, profileEdit,
@@ -9,8 +9,8 @@ import {
   validationSettings, editAvatar, buttonAvatar
 } from './utils';
 import { createCard } from './card.js';
-import { editProfileInfo, renderUserData, hideErorrs, editAvatarImg } from './profile.js';
-import { getInitialCards, printError, getUserData, postCard, renderLoading } from './api.js';
+import { editProfileInfo, renderUserData, editAvatarImg } from './profile.js';
+import { getInitialCards, printError, getUserData, postCard } from './api.js';
 
 const addPopupButton = popupCard.querySelector('.form__button');
 
@@ -65,7 +65,7 @@ formPlace.addEventListener('submit', function (evt) {
   const cardName = formPlace.name.value;
   const cardLink = formPlace.link.value;
   postCard(cardName, cardLink)
-    .then(card => cardsContainer.prepend(createCard(cardName, cardLink, card._id)))
+    .then(card => cardsContainer.prepend(createCard(cardName, cardLink, card._id, 0, false)))
     .then(() => {
       formPlace.reset();
       createCardButton.classList.add('popup__button_disabled');
@@ -82,10 +82,26 @@ buttonAvatar.addEventListener('click', () => {
   openPopup(popupAvatar);
 });
 
-editAvatar.addEventListener('submit', function(evt) {
+editAvatar.addEventListener('submit', function (evt) {
   evt.preventDefault();
   editAvatarImg();
 });
 
 //validation
 enableValidation(validationSettings);
+
+export function renderLoading(isLoading, button) {
+  if (isLoading) {
+    button.textContent = 'Сохранение...';
+    button.disabled = true;
+  }
+  else {
+    if (button.classList.contains('popup__button_create')) {
+      button.textContent = 'Создать';
+    }
+    else {
+      button.textContent = 'Сохранить';
+    }
+    button.disabled = false;
+  }
+}

@@ -1,3 +1,5 @@
+import { validationSettings } from './utils';
+
 // Функция, которая добавляет класс с ошибкой
 export const showInputError = (formElement, formInput, errorMessage, settings) => {
   const errorElement = formElement.querySelector(`.${formInput.id}-error`);
@@ -68,9 +70,14 @@ export const setEventListeners = (formElement, settings) => {
 export const enableValidation = (settings) => {
   const formList = Array.from(document.querySelectorAll(settings.formSelector));
   formList.forEach((formElement) => {
-    formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-    });
     setEventListeners(formElement, settings);
+  });
+};
+
+export function hideErorrs(popup) {
+  const formElement = popup.querySelector(validationSettings.formSelector);
+  const inputList = formElement.querySelectorAll(validationSettings.inputSelector);
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement, validationSettings);
   });
 };

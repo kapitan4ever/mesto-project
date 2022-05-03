@@ -1,10 +1,8 @@
-import { API_URL, token } from './utils.js';
-
 const config = {
-  baseUrl: `${API_URL}`,
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-9',
   headers: {
-    authorization: `${token}`,
-    'Content-Type': 'application/json'
+    authorization: 'a4afe3fb-fc08-4be7-8f57-5e8ad24d8399',
+    'Content-Type': 'application/json',
   }
 }
 
@@ -22,116 +20,80 @@ export function printError(error) {
 
 //upload cards from server
 export const getInitialCards = () => {
-  return fetch(`${API_URL}/cards`, {
-    headers: {
-      authorization: `${token}`,
-      'Content-Type': 'application/json'
-    }
+  return fetch(`${config.baseUrl}/cards`, {
+    headers: config.headers
   })
     .then(responseCheck)
-    .catch(printError)
 };
 
 //add new card to server
-export const postCard = (name, link) => {
-  return fetch(`${API_URL}/cards`, {
+export const postCard = (nameCard, linkCard) => {
+  return fetch(`${config.baseUrl}/cards`, {
     method: 'POST',
-    headers: {
-      authorization: `${token}`,
-      'Content-Type': 'application/json'
-    },
+    headers: config.headers,
     body: JSON.stringify({
-      name: name,
-      link: link
+      name: nameCard,
+      link: linkCard
     })
   })
+    .then(responseCheck)
 };
 
 //delete card
 export const deleteCard = (cardId) => {
-  return fetch(`${API_URL}/cards/${cardId}`, {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: 'DELETE',
-    headers: {
-      authorization: `${token}`,
-      'Content-Type': 'application/json'
-    }
+    headers: config.headers
   })
+    .then(responseCheck)
 };
 
 //liked card
 export const addLike = (cardId) => {
-  return fetch(`${API_URL}/cards/likes/${cardId}`, {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: 'PUT',
-    headers: {
-      authorization: `${token}`,
-      'Content-Type': 'application/json'
-    }
+    headers: config.headers
   })
+    .then(responseCheck)
 };
 
 //unliked card
 export const deleteLike = (cardId) => {
-  return fetch(`${API_URL}/cards/likes/${cardId}`, {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: 'DELETE',
-    headers: {
-      authorization: `${token}`,
-      'Content-Type': 'application/json'
-    }
+    headers: config.headers
   })
+    .then(responseCheck)
 };
 
 //upload data profile from server
 export const getUserData = () => {
-  return fetch(`${API_URL}/users/me`, {
-    headers: {
-      authorization: `${token}`,
-      'Content-Type': 'application/json'
-    }
+  return fetch(`${config.baseUrl}/users/me`, {
+    headers: config.headers
   })
     .then(responseCheck)
 };
 //setting profile
 export const editProfile = (name, description) => {
-  return fetch(`${API_URL}/users/me`, {
+  return fetch(`${config.baseUrl}/users/me`, {
     method: 'PATCH',
-    headers: {
-      authorization: `${token}`,
-      'Content-Type': 'application/json'
-    },
+    headers: config.headers,
     body: JSON.stringify({
       name: name,
       about: description
     })
   })
+    .then(responseCheck)
 };
 
 export const editAvatarProfile = (avatarLink) => {
-  return fetch(`${API_URL}/users/me/avatar`, {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: 'PATCH',
+    headers: config.headers,
     body: JSON.stringify({
       avatar: avatarLink
-    }),
-    headers: {
-      authorization: `${token}`,
-      'Content-Type': 'application/json'
-    }
+    })
   })
-}
-
-
-export function renderLoading(isLoading, button) {
-  if (isLoading) {
-    button.textContent = 'Сохранение...';
-    button.disabled = true;
-  }
-  else {
-    if (button.classList.contains('popup__button_create')) {
-      button.textContent = 'Создать';
-    }
-    else {
-      button.textContent = 'Сохранить';
-    }
-    button.disabled = false;
-  }
+    .then(responseCheck)
 }
 
