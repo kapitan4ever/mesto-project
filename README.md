@@ -7,3 +7,6 @@
 
 ## Стэк
 html, css, БЭМ, pixelperfect, javascript, webpack
+
+[gh-pages](https://kapitan4ever.github.io/mesto-project)
+
