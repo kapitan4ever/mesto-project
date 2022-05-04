@@ -1,3 +1,4 @@
+import { popups } from './utils';
 //функции открытия и закрытия попапа
 export function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -13,3 +14,14 @@ export function escapeClosePopup(evt) {
     closePopup(openedPopup);
   }
 };
+popups.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) {
+        closePopup(popup)
+      }
+      if (evt.target.classList.contains('popup__close')) {
+        closePopup(popup)
+      }
+    })
+  })
+

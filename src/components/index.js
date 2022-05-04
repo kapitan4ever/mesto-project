@@ -5,43 +5,34 @@ import { openPopup, closePopup } from './modal.js';
 import {
   popupProfile, popupCard, popupAvatar, profileEdit,
   profileAddButton, cardsContainer,
-  formPlace, createCardButton, popups, formProfile,
+  formPlace, createCardButton, formProfile,
   validationSettings, editAvatar, buttonAvatar
 } from './utils';
-import { createCard } from './card.js';
+import { createCard, likes, isLiked } from './card.js';
 import { editProfileInfo, renderUserData, editAvatarImg } from './profile.js';
 import { getInitialCards, printError, getUserData, postCard } from './api.js';
 
 const addPopupButton = popupCard.querySelector('.form__button');
 
-//закрытие модального окна по клику
-popups.forEach((popup) => {
-  popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup)
-    }
-    if (evt.target.classList.contains('popup__close')) {
-      closePopup(popup)
-    }
-  })
-});
-
-//promise
 let userId;
-
+//пытаюсь перенести  в card проверку лайка и иконку корзины,
+//но ничего не выходит( в консоле нет ошибок и карточки не отображаются.
+//Может есть пример как это сделать или где почитать?
 Promise.all([getUserData(), getInitialCards()])
   .then(([userData, cards]) => {
     userId = userData._id;
-
+    renderUserData(userData);
     cards.forEach(card => {
-      const initialCards = createCard(card.name, card.link, card._id, card.likes.length, card.likes.some(item => item._id === userId));
+      const likes = card.likes.length;
+      const isLiked = card.likes.some(item => item._id === userId);
+      const initialCards = createCard(card.name, card.link, card._id, likes, isLiked);
       const cardRemove = initialCards.querySelector('.card__remove');
       if (card.owner._id !== userId) {
         cardRemove.remove();
       };
       cardsContainer.append(initialCards);
     })
-    renderUserData(userData);
+
   })
   .catch(printError);
 

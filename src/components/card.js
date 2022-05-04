@@ -4,7 +4,7 @@ import { deleteCard, printError, addLike, deleteLike } from './api';
 
 
 //function add cards
-export function createCard(name, link, cardId, likesCount, isLiked) {
+export function createCard(name, link, cardId, likesCount, isLiked, userId) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitle = cardElement.querySelector('.card__title');
   const cardPhoto = cardElement.querySelector('.card__photo');
@@ -18,6 +18,7 @@ export function createCard(name, link, cardId, likesCount, isLiked) {
   cardLikeCount.textContent = likesCount;
 
   if (isLiked) cardLikeButton.classList.add('card__like_active');
+
   cardLikeButton.addEventListener('click', (evt) => {
     clickLikeButton(cardLikeButton, cardLikeCount, cardId);
   });
@@ -58,4 +59,5 @@ export function clickLikeButton(cardLikeButton, cardLikeCount, cardId) {
       })
       .catch(err => console.error(err))
   }
-}
+};
+
