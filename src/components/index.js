@@ -8,7 +8,7 @@ import {
   formPlace, createCardButton, formProfile,
   validationSettings, editAvatar, buttonAvatar
 } from './utils';
-import { createCard, likes, isLiked } from './card.js';
+import { createCard, likes, isLiked, clickLikeButton } from './card.js';
 import { editProfileInfo, renderUserData, editAvatarImg } from './profile.js';
 import { getInitialCards, printError, getUserData, postCard } from './api.js';
 
@@ -18,10 +18,9 @@ let userId;
 Promise.all([getUserData(), getInitialCards()])
   .then(([userId, cards]) => {
     renderUserData(userId);
-    cards.forEach(card => {
+    cards.forEach((card) => {
       cardsContainer.append(createCard(card, userId._id));
-    })
-
+    });
   })
   .catch(printError);
 
