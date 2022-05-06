@@ -6,7 +6,8 @@ import {
   popupProfile, popupCard, popupAvatar, profileEdit,
   profileAddButton, cardsContainer,
   formPlace, createCardButton, formProfile,
-  validationSettings, editAvatar, buttonAvatar
+  validationSettings, editAvatar, buttonAvatar,
+  profileName, profileDescription, nameInput, jobInput
 } from './utils';
 import { createCard, likes, isLiked, clickLikeButton } from './card.js';
 import { editProfileInfo, renderUserData, editAvatarImg } from './profile.js';
@@ -16,10 +17,11 @@ const addPopupButton = popupCard.querySelector('.form__button');
 
 let userId;
 Promise.all([getUserData(), getInitialCards()])
-  .then(([userId, cards]) => {
-    renderUserData(userId);
+  .then(([userData, cards]) => {
+    userId = userData._id;
+    renderUserData(userData);
     cards.forEach((card) => {
-      cardsContainer.append(createCard(card, userId._id));
+      cardsContainer.append(createCard(card, userId));
     });
   })
   .catch(printError);
@@ -28,6 +30,8 @@ Promise.all([getUserData(), getInitialCards()])
 //profile
 profileEdit.addEventListener('click', () => {
   hideErorrs(popupProfile);
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileDescription.textContent;
   openPopup(popupProfile);
 });
 

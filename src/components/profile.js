@@ -8,7 +8,8 @@ import {
   editAvatar,
   linkAvatar,
   profileAvatar,
-  createButtonAvatar
+  createButtonAvatar,
+  validationSettings
 } from './utils.js';
 import { editProfile, printError, editAvatarProfile } from './api.js';
 import { closePopup } from './modal.js';
@@ -33,6 +34,7 @@ export function editProfileInfo(evt) {
   editProfile(nameInput.value, jobInput.value)
     .then(res => {
       renderUserData(res);
+      disabledEditPopupButton(editPopupButton);
       closePopup(popupProfile);
     })
     .catch(printError)
@@ -53,3 +55,8 @@ export function editAvatarImg() {
     .catch(printError)
     .finally(() => renderLoading(false, editPopupButtonAvatar));
 }
+
+export function disabledEditPopupButton(disabledButton) {
+  disabledButton.classList.add(validationSettings.inactiveButtonClass);
+  disabledButton.disabled = true;
+  };

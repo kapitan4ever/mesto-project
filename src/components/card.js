@@ -4,8 +4,7 @@ import { deleteCard, printError, addLike, deleteLike } from './api';
 
 //function add cards
 export function createCard(card, userId) {
-  const {likes, name, link, isLiked, cardId, owner} = card;
-  //console.log(card);
+  const { likes, name, link, isLiked, cardId, owner } = card;
 
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitle = cardElement.querySelector('.card__title');
@@ -18,11 +17,7 @@ export function createCard(card, userId) {
   cardPhoto.src = card.link;
   cardPhoto.alt = card.name;
   cardLikeCount.textContent = card.likes.length;
-  //cardRemove.style.display = "block";
-  //name, link, cardId, likesCount, isLiked, userId
-  //checkCardOwner(card, userId, cardRemove)
 
-  if (isLiked) cardLikeButton.classList.add('card__like_active');
   cardLikeButton.addEventListener('click', (evt) => {
     clickLikeButton(cardLikeButton, cardLikeCount, card._id);
   });
@@ -36,27 +31,14 @@ export function createCard(card, userId) {
       .catch(printError)
   });
 
-  if (card.likes.some(item => item._id === userId)){
+  if (card.likes.some(item => item._id === userId)) {
+
     cardLikeButton.classList.add('card__like_active');
   }
-  //не получается добавить с карточкой корзину. Только F5 лечит ошибку, которую не видно в консоли.
-  //предполагаю, что ошибка не здесь, а в index.js[22]
+
   if (card.owner._id !== userId) {
     cardRemove.remove();
   }
-  /*if (card.owner._id === userId) {
-    cardRemove.style.display = "block";
-  } else {
-    cardRemove.remove();
-  }*/
-  /*if (card.owner._id !== userId) {
-    cardRemove.classList.add('card__remove');
-  }*/
-  /*function checkCardOwner(card, userId, cardRemove) {
-    if (card.owner._id !== userId) {
-      cardRemove.remove();
-    }
-  }*/
 
   cardPhoto.addEventListener('click', () => {
     popupImage.src = link;
