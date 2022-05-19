@@ -1,3 +1,4 @@
+//ниже код без ООП
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-9',
   headers: {
@@ -96,4 +97,3 @@ export const editAvatarProfile = (avatarLink) => {
   })
     .then(responseCheck)
 }
-
