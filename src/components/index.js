@@ -12,8 +12,18 @@ import {
 import { createCard, likes, isLiked, clickLikeButton } from './card.js';
 import { editProfileInfo, renderUserData, editAvatarImg } from './profile.js';
 import { getInitialCards, printError, getUserData, postCard } from './api.js';
-
+import { api } from './ApiClass.js';
+import { Card } from './CardClass.js';
 const addPopupButton = popupCard.querySelector('.form__button');
+
+api.getInitialCards()
+  .then((res) => {
+    res.forEach(card => {
+      const newCard = new Card('.card-template', card);
+      const cardElement = newCard.generate();
+      cardsContainer.append(cardElement);
+    });
+});
 
 let userId;
 Promise.all([getUserData(), getInitialCards()])
@@ -25,7 +35,6 @@ Promise.all([getUserData(), getInitialCards()])
     });
   })
   .catch(printError);
-
 
 //profile
 profileEdit.addEventListener('click', () => {
@@ -80,3 +89,5 @@ export function renderLoading(isLoading, button) {
     button.textContent = isLoading ? 'Сохранение...' : 'Сохранить'
   }
 }
+
+
