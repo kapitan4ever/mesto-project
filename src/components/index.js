@@ -14,16 +14,15 @@ import { editProfileInfo, renderUserData, editAvatarImg } from './profile.js';
 import { getInitialCards, printError, getUserData, postCard } from './api.js';
 import { api } from './ApiClass.js';
 import { Card } from './CardClass.js';
+import { Section } from './SectionClass.js';
+import { UserInfo } from './UserInfo.js';
 const addPopupButton = popupCard.querySelector('.form__button');
 
 api.getInitialCards()
   .then((res) => {
-    res.forEach(card => {
-      const newCard = new Card('.card-template', card);
-      const cardElement = newCard.generate();
-      cardsContainer.append(cardElement);
-    });
-});
+      const section =  new Section(res, '.cards');
+      section.renderCards();
+  });
 
 let userId;
 Promise.all([getUserData(), getInitialCards()])
