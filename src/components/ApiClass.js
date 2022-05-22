@@ -27,7 +27,7 @@ class Api {
   return fetch(`${this.baseUrl}/cards`, {
     headers: this.headers
   })
-    .then(responseCheck)
+    .then(this._checkResponse)
 };
 
 //add new card to server
@@ -40,7 +40,7 @@ class Api {
       link: linkCard
     })
   })
-    .then(responseCheck)
+    .then(this._checkResponse)
 };
 
 //delete card
@@ -49,7 +49,7 @@ class Api {
     method: 'DELETE',
     headers: this.headers
   })
-    .then(responseCheck)
+    .then(this._checkResponse)
 };
 
 //liked card
@@ -58,7 +58,7 @@ class Api {
     method: 'PUT',
     headers: this.headers
   })
-    .then(responseCheck)
+    .then(this._checkResponse)
 };
 
 //unliked card
@@ -67,16 +67,9 @@ class Api {
     method: 'DELETE',
     headers: this.headers
   })
-    .then(responseCheck)
+    .then(this._checkResponse)
 };
 
-//upload data profile from server
-  getUserData = () => {
-  return fetch(`${this.baseUrl}/users/me`, {
-    headers: this.headers
-  })
-    .then(responseCheck)
-};
 //setting profile
   editProfile = (name, description) => {
   return fetch(`${this.baseUrl}/users/me`, {
@@ -87,7 +80,7 @@ class Api {
       about: description
     })
   })
-    .then(responseCheck)
+    .then(this._checkResponse)
 };
 
   editAvatarProfile = (avatarLink) => {
@@ -98,7 +91,7 @@ class Api {
       avatar: avatarLink
     })
   })
-    .then(responseCheck)
+    .then(this._checkResponse)
 }
 }
 
@@ -111,98 +104,3 @@ const config = {
 }
 
 export const api = new Api(config.baseUrl, config.headers);
-console.log(api.getUserInfo());
-
-
-
-
-export function responseCheck(res) {
-  if (res.ok) {
-    return res.json();
-  } else {
-    return Promise.reject(`Ошибка: ${res.status}`);
-  }
-}
-
-export function printError(error) {
-  console.log(`Ошибка: ${error}`);
-}
-
-//upload cards from server
-export const getInitialCards = () => {
-  return fetch(`${config.baseUrl}/cards`, {
-    headers: config.headers
-  })
-    .then(responseCheck)
-};
-
-//add new card to server
-export const postCard = (nameCard, linkCard) => {
-  return fetch(`${config.baseUrl}/cards`, {
-    method: 'POST',
-    headers: config.headers,
-    body: JSON.stringify({
-      name: nameCard,
-      link: linkCard
-    })
-  })
-    .then(responseCheck)
-};
-
-//delete card
-export const deleteCard = (cardId) => {
-  return fetch(`${config.baseUrl}/cards/${cardId}`, {
-    method: 'DELETE',
-    headers: config.headers
-  })
-    .then(responseCheck)
-};
-
-//liked card
-export const addLike = (cardId) => {
-  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-    method: 'PUT',
-    headers: config.headers
-  })
-    .then(responseCheck)
-};
-
-//unliked card
-export const deleteLike = (cardId) => {
-  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-    method: 'DELETE',
-    headers: config.headers
-  })
-    .then(responseCheck)
-};
-
-//upload data profile from server
-export const getUserData = () => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    headers: config.headers
-  })
-    .then(responseCheck)
-};
-//setting profile
-export const editProfile = (name, description) => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify({
-      name: name,
-      about: description
-    })
-  })
-    .then(responseCheck)
-};
-
-export const editAvatarProfile = (avatarLink) => {
-  return fetch(`${config.baseUrl}/users/me/avatar`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify({
-      avatar: avatarLink
-    })
-  })
-    .then(responseCheck)
-}
