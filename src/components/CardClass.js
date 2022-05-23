@@ -1,10 +1,8 @@
 import { popupImage, popupFullsize, popupPlace, popups } from "./utils";
 import { openPopup } from "./modal";
-//import { usverId } from './index.js';
-const popupElement = document.querySelector('.popup');
-//const popupImage = document.querySelector('.popup__image');
+import { userIdent } from './UserInfo.js';
 
-const userId = '4638d5a7cee257ce437a178b';
+const popupElement = document.querySelector('.popup');
 export class Card {
   //свойства
   constructor(selector, card) {
@@ -24,10 +22,10 @@ export class Card {
     this._elementCard.querySelector('.card__title').textContent = this._name;
     this._elementCard.querySelector('.card__photo').setAttribute('src', this._image);
     this._elementCard.querySelector('.card__photo').setAttribute('alt', this._name);
-    if (this._likes.some(like => like._id === userId)) {
+    if (this._likes.some(like => like._id === userIdent)) {
       this._elementCard.querySelector('.card__like').classList.add('card__like_active');
     }
-    if (this.owner !== userId) {
+    if (this.owner !== userIdent) {
       this._elementCard.querySelector('.card__remove').remove();
     }
     this._elementCard.querySelector('.card__like-counter').textContent = this._likes.length;
