@@ -1,6 +1,5 @@
 import { api } from './index.js';
 
-
 export let userIdent;
 export class UserInfo {
   constructor(data) {
@@ -11,12 +10,12 @@ export class UserInfo {
 
   getUserInfo() {
     api.getUserInfo()
-    .then(res => {
-      this._name.textContent = res.name;
-      this._about.textContent = res.about;
-      this._avatar.src = res.avatar;
-      userIdent = res._id;
-    });
+      .then(res => {
+        this._name.textContent = res.name;
+        this._about.textContent = res.about;
+        this._avatar.src = res.avatar;
+        userIdent = res._id;
+      });
   }
 
   setUserInfo() {

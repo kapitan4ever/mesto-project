@@ -1,5 +1,5 @@
-import { popupImage, popupFullsize, popupPlace, popups } from "./utils";
-import { openPopup } from "./modal";
+import { popupImage, popupFullsize, popupPlace, popups } from './utils.js';
+import { openPopup } from './modal.js';
 import { userIdent } from './UserInfo.js';
 
 const popupElement = document.querySelector('.popup');
