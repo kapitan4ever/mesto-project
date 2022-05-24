@@ -1,4 +1,4 @@
-import { cardTemplate, popupFullsize, popupImage, popupPlace } from './utils';
+/*import { cardTemplate, popupFullsize, popupImage, popupPlace } from './utils';
 import { openPopup } from './modal';
 import { deleteCard, printError, addLike, deleteLike } from './api';
 
@@ -66,5 +66,5 @@ export function clickLikeButton(cardLikeButton, cardLikeCount, cardId) {
       })
       .catch(err => console.error(err))
   }
-};
+};*/
 
