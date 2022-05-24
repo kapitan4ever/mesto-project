@@ -9,9 +9,7 @@ export class Section {
     renderCards() {
       this._renderedCards.forEach((item) => {
         const card = new Card('.card-template', item);
-
         const finishCard = card.generate();
-
         this.setCard(finishCard);
       });
     }

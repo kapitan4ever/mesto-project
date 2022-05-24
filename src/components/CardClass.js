@@ -1,8 +1,9 @@
-import { popupImage, popupFullsize, popupPlace, popups } from './utils.js';
-import { openPopup } from './modal.js';
-import { userIdent } from './UserInfo.js';
-
+import { popupImage, popupFullsize, popupPlace, popups } from "./utils";
+import { openPopup } from "./modal";
 const popupElement = document.querySelector('.popup');
+
+
+const userId = '4638d5a7cee257ce437a178b';
 export class Card {
   //свойства
   constructor(selector, card) {
@@ -22,10 +23,10 @@ export class Card {
     this._elementCard.querySelector('.card__title').textContent = this._name;
     this._elementCard.querySelector('.card__photo').setAttribute('src', this._image);
     this._elementCard.querySelector('.card__photo').setAttribute('alt', this._name);
-    if (this._likes.some(like => like._id === userIdent)) {
+    if (this._likes.some(like => like._id === userId)) {
       this._elementCard.querySelector('.card__like').classList.add('card__like_active');
     }
-    if (this.owner !== userIdent) {
+    if (this.owner !== userId) {
       this._elementCard.querySelector('.card__remove').remove();
     }
     this._elementCard.querySelector('.card__like-counter').textContent = this._likes.length;
@@ -44,6 +45,9 @@ export class Card {
     openPopup(popupFullsize);
   }
 }
+
+
+
 
 /*
 createdAt: "2022-05-22T14:19:39.601Z"

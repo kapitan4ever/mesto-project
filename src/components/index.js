@@ -1,4 +1,5 @@
 import '../pages/index.css';
+
 import { enableValidation, hideErorrs } from './validate.js';
 import { openPopup, closePopup } from './modal.js';
 import {
@@ -6,40 +7,28 @@ import {
   profileAddButton, cardsContainer,
   formPlace, createCardButton, formProfile,
   validationSettings, editAvatar, buttonAvatar,
-  profileName, profileDescription, nameInput, jobInput, config, profile
+  profileName, profileDescription, nameInput, jobInput
 } from './utils';
 import { createCard, likes, isLiked, clickLikeButton } from './card.js';
 import { editProfileInfo, renderUserData, editAvatarImg } from './profile.js';
 import { getInitialCards, printError, getUserData, postCard } from './api.js';
-import { Api } from './ApiClass.js';
+import { api } from './ApiClass.js';
 import { Card } from './CardClass.js';
 import { Section } from './SectionClass.js';
 import { UserInfo } from './UserInfo.js';
-
 const addPopupButton = popupCard.querySelector('.form__button');
-
-export const api = new Api(config.baseUrl, config.headers);
-
-export const userInfo = new UserInfo(profile);
-userInfo.getUserInfo();
-
-/*export let userIdent;
-api.getUserInfo()
-  .then((res) => {
-    userIdent = res._id;
-  });*/
 
 api.getInitialCards()
   .then((res) => {
-    const section = new Section(res, '.cards');
-    section.renderCards();
+      const section =  new Section(res, '.cards');
+      section.renderCards();
   });
 
 let userId;
 Promise.all([getUserData(), getInitialCards()])
   .then(([userData, cards]) => {
     userId = userData._id;
-    //renderUserData(userData);
+    renderUserData(userData);
     cards.forEach((card) => {
       cardsContainer.append(createCard(card, userId));
     });
