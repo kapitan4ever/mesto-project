@@ -1,16 +1,15 @@
-import { popupImage, popupFullsize, popupPlace, popups } from './utils.js';
-import { openPopup } from './modal.js';
 import { userIdent } from './UserInfo.js';
+import { api } from './index.js';
 
-const popupElement = document.querySelector('.popup');
 export class Card {
   //свойства
-  constructor(selector, card) {
+  constructor(selector, { link, name, likes, owner, _id }) {
     this._selector = selector;
-    this._image = card.link;
-    this._name = card.name;
-    this._likes = card.likes;
-    this.owner = card.owner._id;
+    this._image = link;
+    this._name = name;
+    this._likes = likes;
+    this.owner = owner._id;
+    this.cardId = _id;
   }
 
   _getCard() {
@@ -19,29 +18,59 @@ export class Card {
 
   generate() {
     this._elementCard = this._getCard();
-    this._elementCard.querySelector('.card__title').textContent = this._name;
-    this._elementCard.querySelector('.card__photo').setAttribute('src', this._image);
-    this._elementCard.querySelector('.card__photo').setAttribute('alt', this._name);
+    this.cardPhoto = this._elementCard.querySelector('.card__photo');
+    this.cardTitle = this._elementCard.querySelector('.card__title');
+    this.cardLike = this._elementCard.querySelector('.card__like');
+    this.cardLikeCount = this._elementCard.querySelector('.card__like-counter');
+    this.deleteButton = this._elementCard.querySelector('.card__remove');
+    this.cardTitle.textContent = this._name;
+    this.cardPhoto.setAttribute('src', this._image);
+    this.cardPhoto.setAttribute('alt', this._name);
+
     if (this._likes.some(like => like._id === userIdent)) {
-      this._elementCard.querySelector('.card__like').classList.add('card__like_active');
+      this.cardLike.classList.add('card__like_active');
     }
     if (this.owner !== userIdent) {
-      this._elementCard.querySelector('.card__remove').remove();
+      this.deleteButton.remove();
     }
-    this._elementCard.querySelector('.card__like-counter').textContent = this._likes.length;
+    this.cardLikeCount.textContent = this._likes.length;
     this._setEventListeners();
     return this._elementCard;
   }
 
   _setEventListeners() {
-    this._elementCard.querySelector('.card__photo').addEventListener('click', () => {
-      this._handleOpenPopup();
+    this._isLiked();
+    this._removedCard();
+  }
+
+  _removedCard() {
+    this.deleteButton.addEventListener('click', (evt) => {
+      api.deleteCard(this.cardId)
+        .then((res) => {
+          evt.target.closest('.card').remove();
+        })
+        .catch(api._printError());
     });
   }
-  _handleOpenPopup() {
-    popupImage.src = this._image;
-    popupPlace.textContent = this._name;
-    openPopup(popupFullsize);
+
+  _isLiked() {
+    this.cardLike.addEventListener('click', () => {
+      if (this.cardLike.classList.contains('card__like_active')) {
+        api.deleteLike(this.cardId)
+          .then(res => {
+            this.cardLikeCount.textContent = res.likes.length;
+            this.cardLike.classList.remove('card__like_active');
+          })
+          .catch(err => console.error(err))
+      } else {
+        api.addLike(this.cardId)
+          .then(res => {
+            this.cardLikeCount.textContent = res.likes.length;
+            this.cardLike.classList.add('card__like_active');
+          })
+          .catch(err => console.error(err))
+      }
+    });
   }
 }
 

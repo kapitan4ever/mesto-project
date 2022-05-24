@@ -12,7 +12,6 @@ import { createCard, likes, isLiked, clickLikeButton } from './card.js';
 import { editProfileInfo, renderUserData, editAvatarImg } from './profile.js';
 import { getInitialCards, printError, getUserData, postCard } from './api.js';
 import { Api } from './ApiClass.js';
-import { Card } from './CardClass.js';
 import { Section } from './SectionClass.js';
 import { UserInfo } from './UserInfo.js';
 
@@ -23,19 +22,13 @@ export const api = new Api(config.baseUrl, config.headers);
 export const userInfo = new UserInfo(profile);
 userInfo.getUserInfo();
 
-/*export let userIdent;
-api.getUserInfo()
-  .then((res) => {
-    userIdent = res._id;
-  });*/
-
 api.getInitialCards()
-  .then((res) => {
-    const section = new Section(res, '.cards');
+  .then((cards) => {
+    const section = new Section(cards, '.cards');
     section.renderCards();
   });
 
-let userId;
+/*let userId;
 Promise.all([getUserData(), getInitialCards()])
   .then(([userData, cards]) => {
     userId = userData._id;
@@ -44,7 +37,7 @@ Promise.all([getUserData(), getInitialCards()])
       cardsContainer.append(createCard(card, userId));
     });
   })
-  .catch(printError);
+  .catch(printError);*/
 
 //profile
 profileEdit.addEventListener('click', () => {
