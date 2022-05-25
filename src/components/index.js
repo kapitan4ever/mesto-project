@@ -29,28 +29,28 @@ api.getInitialCards()
     section.renderCards();
   });
 
-const popupUser = new Popup(popupProfile);
-popupUser.setEventListeners();
-const popupC = new Popup(popupCard);
-popupC.setEventListeners();
-const popupA = new Popup(popupAvatar);
-popupA.setEventListeners();
+const userPopup = new Popup(popupProfile);
+userPopup.setEventListeners();
+const cardPopup = new Popup(popupCard);
+cardPopup.setEventListeners();
+const avatarPopup = new Popup(popupAvatar);
+avatarPopup.setEventListeners();
 
 profileEdit.addEventListener('click', () => {
   hideErorrs(popupProfile);
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
-  popupUser.open();
+  userPopup.open();
 });
 
 buttonAvatar.addEventListener('click', () => {
   hideErorrs(popupAvatar);
-  popupA.open();
+  avatarPopup.open();
 });
 
 //cards
 profileAddButton.addEventListener('click', () => {
-  popupC.open();
+  cardPopup.open();
 });
 
 //Сабмиты форм
