@@ -2,8 +2,9 @@
 //Этот класс должен перезаписывать родительский метод open.
 //В методе open класса PopupWithImage нужно вставлять в попап
 //картинку с src изображения и подписью к картинке.
+import {Popup} from './Popup.js';
 import { popupImage, popupFullsize, popupPlace } from './utils.js';
-export class PopupWithImage {
+export class PopupWithImage  {
 	constructor({link, name}) {
 		this._image = card.link;
     this._name = card.name;
@@ -13,9 +14,4 @@ export class PopupWithImage {
 		popupPlace.textContent = this._name;
 		openPopup(popupFullsize);
 	}
-
-  _
 }
-
-
-

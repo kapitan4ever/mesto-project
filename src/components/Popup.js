@@ -11,17 +11,18 @@ import { popups } from './utils';
 export class Popup {
   constructor(popupSelector) {
     this._popup = popupSelector;
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
 
   open() {
     this._popup.classList.add('popup_opened');
-    document.addEventListener('keydown', _handleEscClose);
+    document.addEventListener('keydown', this._handleEscClose);
+
   }
 
   close() {
     this._popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', _handleEscClose);
-    this.close();
+    document.removeEventListener('keydown', this._handleEscClose);
   }
 
   _handleEscClose(evt) {
@@ -33,17 +34,13 @@ export class Popup {
   }
 
   setEventListeners() {
-    popups.forEach((popup) => {
-      popup.addEventListener('mousedown', (evt) => {
+    this._popup.addEventListener('mousedown', (evt) => {
         if (evt.target.classList.contains('popup_opened')) {
-          this.close(popup)
+          this.close(this._popup);
         }
         if (evt.target.classList.contains('popup__close')) {
-          this.close(popup)
+          this.close(this._popup);
         }
       });
-    });
   }
 }
-
-

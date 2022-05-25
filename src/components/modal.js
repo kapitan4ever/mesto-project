@@ -1,4 +1,4 @@
-import { popups } from './utils';
+/*import { popups } from './utils';
 //функции открытия и закрытия попапа
 export function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -23,5 +23,5 @@ popups.forEach((popup) => {
         closePopup(popup)
       }
     })
-  })
+  })*/
 
