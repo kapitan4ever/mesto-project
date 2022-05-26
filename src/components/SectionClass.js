@@ -1,5 +1,5 @@
 import { Card } from './CardClass.js';
-
+import { popupFullsize } from './utils.js';
 export class Section {
     constructor(cards, selector) {
       this._renderedCards = cards;
@@ -7,8 +7,8 @@ export class Section {
     }
 
     renderCards() {
-      this._renderedCards.forEach((item) => {
-        const card = new Card('.card-template', item);
+      this._renderedCards.forEach((cardItem) => {
+        const card = new Card('.card-template', cardItem);
 
         const finishCard = card.generate();
 

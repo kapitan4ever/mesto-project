@@ -1,5 +1,8 @@
+'use strict';
 import { userIdent } from './UserInfo.js';
 import { api } from './index.js';
+import { PopupWithImage } from './PopupWithImage.js';
+import { popupFullsize } from './utils.js';
 
 export class Card {
   //свойства
@@ -35,6 +38,7 @@ export class Card {
     }
     this.cardLikeCount.textContent = this._likes.length;
     this._setEventListeners();
+    this._handleCardClick();
     return this._elementCard;
   }
 
@@ -51,6 +55,16 @@ export class Card {
         })
         .catch(api._printError());
     });
+  }
+
+  _handleCardClick() {
+    this.cardPhoto.addEventListener('click', () => {
+      popupFullsize.querySelector('.popup__image').setAttribute('src', this._image);
+      popupFullsize.querySelector('.popup__place').textContent = this._name;
+      const popupImageObj = new PopupWithImage(popupFullsize);
+      popupImageObj.setEventListeners();
+      popupImageObj.open();
+    })
   }
 
   _isLiked() {

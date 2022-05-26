@@ -10,10 +10,11 @@
 //Для каждого попапа создавайте свой экземпляр класса PopupWithForm.
 
 export class PopupWithForm extends Popup {
-  constructor(popupSelector) {
-    this._popup = popupSelector;
-
+  constructor(popupSelector, callbackSubmit) {
+    super(popupSelector)//записывать вначале!
+    this.callbackSubmit = callbackSubmit;
   }
+
   _getInputValues() {
     //const cardName = formPlace.name.value;
     //const cardLink = formPlace.link.value;
@@ -24,7 +25,8 @@ export class PopupWithForm extends Popup {
 
   }
   close() {
-    this._popup.reset();//добавляем сброс полей
     super.close();//вызываем родительский метод из Popup.js
+    this._popup.reset();//добавляем сброс полей
+
   }
 }

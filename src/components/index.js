@@ -76,7 +76,7 @@ formPlace.addEventListener('submit', function (evt) {
       formPlace.reset();
       createCardButton.classList.add('popup__button_disabled');
       createCardButton.disabled = true;
-      closePopup(popupCard);
+      close(popupCard);
     })
     .catch(printError)
     .finally(() => renderLoading(false, addPopupButton));
