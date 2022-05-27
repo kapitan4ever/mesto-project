@@ -1,22 +1,24 @@
 'use strict';
 import { userIdent } from './UserInfo.js';
 import { api } from './index.js';
-import { PopupWithImage } from './PopupWithImage.js';
+
 import { popupFullsize } from './utils.js';
 
-export class Card {
+export default class Card {
   //свойства
-  constructor(selector, { link, name, likes, owner, _id }) {
+  constructor({ link, name, likes, owner, _id }, {selector, handleCardClick}) {
     this._selector = selector;
     this._image = link;
     this._name = name;
     this._likes = likes;
     this.owner = owner._id;
     this.cardId = _id;
+    this._handleCardClick = handleCardClick;
   }
 
   _getCard() {
-    return document.querySelector(this._selector).content.querySelector('.card').cloneNode(true);
+    const cardElement = document.querySelector(this._selector).content.querySelector('.card').cloneNode(true);
+    return cardElement
   }
 
   generate() {
@@ -38,7 +40,7 @@ export class Card {
     }
     this.cardLikeCount.textContent = this._likes.length;
     this._setEventListeners();
-    this._handleCardClick();
+    this._handleCardClick(this.cardPhoto);
     return this._elementCard;
   }
 
@@ -55,16 +57,6 @@ export class Card {
         })
         .catch(api._printError());
     });
-  }
-
-  _handleCardClick() {
-    this.cardPhoto.addEventListener('click', () => {
-      popupFullsize.querySelector('.popup__image').setAttribute('src', this._image);
-      popupFullsize.querySelector('.popup__place').textContent = this._name;
-      const popupImageObj = new PopupWithImage(popupFullsize);
-      popupImageObj.setEventListeners();
-      popupImageObj.open();
-    })
   }
 
   _isLiked() {
