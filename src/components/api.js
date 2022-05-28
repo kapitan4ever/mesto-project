@@ -1,4 +1,4 @@
-export function responseCheck(res) {
+/*export function responseCheck(res) {
   if (res.ok) {
     return res.json();
   } else {
@@ -96,3 +96,4 @@ const config = {
     'Content-Type': 'application/json',
   }
 }
+*/

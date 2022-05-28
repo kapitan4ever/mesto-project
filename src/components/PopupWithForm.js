@@ -8,25 +8,52 @@
 //но и добавлять обработчик сабмита формы.
 //- Перезаписывает родительский метод close, так как при закрытии попапа форма должна ещё и сбрасываться.
 //Для каждого попапа создавайте свой экземпляр класса PopupWithForm.
+import Popup from './Popup.js';
+export default class PopupWithForm extends Popup {
+  constructor({ popupSelector, handleFormSubmit }) {
+    super(popupSelector);//записывать вначале!
+    this._handleFormSubmit = handleFormSubmit;//колбэк сабмита формы
+    this._form = popupSelector.querySelector('form');
+  }
 
-export class PopupWithForm extends Popup {
-  constructor(popupSelector, callbackSubmit) {
-    super(popupSelector)//записывать вначале!
-    this.callbackSubmit = callbackSubmit;
+  open() {
+    super.open();
+  }
+
+  close() {
+    super.close();//вызываем родительский метод из Popup.js
+    this._form.reset();//добавляем сброс полей
+
   }
 
   _getInputValues() {
-    //const cardName = formPlace.name.value;
-    //const cardLink = formPlace.link.value;
-    //nameInput.value = profileName.textContent;
-    //jobInput.value = profileDescription.textContent;
+    // достаём все элементы полей
+    this._inputList = this._form.querySelectorAll('.form__input');
+    // создаём пустой объект
+    this._formValues = {};
+    // добавляем в этот объект значения всех полей
+    this._inputList.forEach(input => {
+      this._formValues[input.name] = input.value; //поле name в инпуте
+    });
+    // возвращаем объект значений
+    return this._formValues;
   }
+
   setEventListeners() {
+    super.setEventListeners();//добавляет обработчик клика иконке закрытия
+    this._form.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      this._handleFormSubmit(this._getInputValues());
+    });//добавляет обработчик сабмита формы.
+  };
 
-  }
-  close() {
-    super.close();//вызываем родительский метод из Popup.js
-    this._popup.reset();//добавляем сброс полей
 
+  renderLoading(isLoading, button) {
+    if (button.name === 'create-card-button') {
+      button.textContent = isLoading ? 'Сохранение...' : 'Создать'
+    } else {
+      button.textContent = isLoading ? 'Сохранение...' : 'Сохранить'
+    }
   }
 }
+

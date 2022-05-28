@@ -6,7 +6,8 @@ import {
   profileAddButton, cardsContainer,
   formPlace, createCardButton, formProfile,
   validationSettings, editAvatar, buttonAvatar,
-  profileName, profileDescription, nameInput, jobInput, config, profile, popupImage, popupPlace, popupFullsize
+  profileName, profileDescription, nameInput, jobInput, config, profile, popupImage,
+  popupPlace, popupFullsize, createButtonAvatar, profileAvatar
 } from './utils';
 import { createCard } from './card.js';
 import { editProfileInfo, editAvatarImg } from './profile.js';
@@ -14,9 +15,10 @@ import { printError, postCard } from './api.js';
 import { Api } from './ApiClass.js';
 import Section from './SectionClass.js';
 import { UserInfo } from './UserInfo.js';
-import { Popup } from './Popup.js';
+import Popup from './Popup.js';
 import Card from './CardClass';
 import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
 
 const addPopupButton = popupCard.querySelector('.form__button');
 
@@ -29,10 +31,10 @@ const popupFull = new PopupWithImage(popupFullsize);
 popupFull.setEventListeners();
 
 api.getInitialCards()
-//-- Получили массив карточек с сервера --//
+  //-- Получили массив карточек с сервера --//
   .then((cards) => {
-//-- Создаем объект секции куда загружать карточки --//
-//-- Передаем в контсруктор полученный массив карточек, функцию которая создает объект карточки для вставки--//
+    //-- Создаем объект секции куда загружать карточки --//
+    //-- Передаем в контсруктор полученный массив карточек, функцию которая создает объект карточки для вставки--//
     const cardSection = new Section({
       arrayItems: cards,
       renderer: (cardItem) => {
@@ -55,12 +57,12 @@ api.getInitialCards()
     cardSection.renderItems();
   });
 
-const userPopup = new Popup(popupProfile);
-userPopup.setEventListeners();
-const cardPopup = new Popup(popupCard);
-cardPopup.setEventListeners();
-const avatarPopup = new Popup(popupAvatar);
-avatarPopup.setEventListeners();
+
+//const userPopup = new PopupWithForm(popupProfile);
+//userPopup.setEventListeners();
+//const cardPopup = new PopupWithForm(popupCard);
+//cardPopup.setEventListeners();
+
 
 profileEdit.addEventListener('click', () => {
   hideErorrs(popupProfile);
@@ -85,10 +87,10 @@ profileAddButton.addEventListener('click', () => {
 formProfile.addEventListener('submit', editProfileInfo);
 
 //avatar
-editAvatar.addEventListener('submit', function (evt) {
+/*editAvatar.addEventListener('submit', function (evt) {
   evt.preventDefault();
   editAvatarImg();
-});
+});*/
 
 //card
 formPlace.addEventListener('submit', function (evt) {
@@ -102,19 +104,32 @@ formPlace.addEventListener('submit', function (evt) {
       formPlace.reset();
       createCardButton.classList.add('popup__button_disabled');
       createCardButton.disabled = true;
-      close(popupCard);
+      this.close(popupCard);
     })
     .catch(printError)
     .finally(() => renderLoading(false, addPopupButton));
 });
 
+
+
+/*const avatarPopup = new PopupWithForm({
+  popupSelector: popupAvatar,
+  handleFormSubmit: (inputs) => {
+      editAvatar.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      this._handleFormSubmit(this._getInputValues());
+    });
+  }
+});*/
+avatarPopup.setEventListeners();//слушатель аватара
+
 //validation
 enableValidation(validationSettings);
 
-export function renderLoading(isLoading, button) {
+/*export function renderLoading(isLoading, button) {
   if (button.name === 'create-card-button') {
     button.textContent = isLoading ? 'Сохранение...' : 'Создать'
   } else {
     button.textContent = isLoading ? 'Сохранение...' : 'Сохранить'
   }
-}
+}*/

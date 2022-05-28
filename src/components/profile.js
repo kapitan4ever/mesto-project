@@ -1,4 +1,4 @@
-import {
+/*import {
   nameInput,
   jobInput,
   profileName,
@@ -18,7 +18,7 @@ import { renderLoading } from './index.js';
 const editPopupButton = popupProfile.querySelector('.form__button');
 const editPopupButtonAvatar = popupAvatar.querySelector('#save-avatar');
 
-/*let user;
+let user;
 
 export function renderUserData(data) {
   user = data;
@@ -27,7 +27,7 @@ export function renderUserData(data) {
   profileAvatar.src = data.avatar;
   profileAvatar.alt = `Аватар ${data.name}`;
 }
-*/
+
 export function editProfileInfo(evt) {
   evt.preventDefault();
   renderLoading(true, editPopupButton);
@@ -60,3 +60,4 @@ export function disabledEditPopupButton(disabledButton) {
   disabledButton.classList.add(validationSettings.inactiveButtonClass);
   disabledButton.disabled = true;
   };
+*/
