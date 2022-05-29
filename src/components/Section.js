@@ -10,6 +10,11 @@ export default class Section {
   }
 
   renderItems() {
-    this._renderedItems.forEach(item => this._renderer(item));
+    if (this._renderedItems.length > 1) {
+      this._renderedItems.forEach(item => this._renderer(item));
+    }
+    else {
+      this._renderer(this._renderedItems);
+    }
   }
 }
