@@ -22,7 +22,6 @@ export default class PopupWithForm extends Popup {
 
   close() {
     super.close();//вызываем родительский метод из Popup.js
-    //this._handleFormSubmit(this._getInputValues());
     this._form.reset();//добавляем сброс полей
   }
 

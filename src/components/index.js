@@ -41,9 +41,7 @@ api.getInitialCards()
         const card = new Card(cardItem, {
           selector: '.card-template', handleCardClick: (cardPhoto) => {
             cardPhoto.addEventListener('click', () => {
-              popupImage.setAttribute('src', cardPhoto.src);
-              popupPlace.textContent = cardPhoto.alt;
-              popupFull.open();
+              popupFull.open(cardPhoto);
             })
           }
         });
@@ -57,7 +55,6 @@ api.getInitialCards()
     cardSection.renderItems();
   });
 
-
 const avatarPopup = new PopupWithForm({
   popupSelector: popupAvatar,
   handleFormSubmit: (res) => {
@@ -67,7 +64,7 @@ const avatarPopup = new PopupWithForm({
         profileImage.src = res.avatar;
       })
       .catch(api._printError())
-      .finally(() => renderLoading(false, createButtonAvatar));
+      .finally(() => api.renderLoading(false, createButtonAvatar));
   }
 });
 
@@ -83,21 +80,41 @@ const userPopup = new PopupWithForm({
         profileDescription.textContent = res.about;
       })
       .catch(api._printError())
-      .finally(() => renderLoading(false, createProfileButton));
+      .finally(() => api.renderLoading(false, createProfileButton));
   }
 });
 userPopup.setEventListeners();
 
 const cardPopup = new PopupWithForm({
   popupSelector: popupCard,
-  handleFormSubmit: (res) => {
+  handleFormSubmit: function handleFormSubmit(res) {
     api.renderLoading(true, createCardButton);
     api.postCard(res['name'], res['link'])
-      .then(res => {
-        console.log(res)
+      .then(respon => {
+        console.log(respon);
+        const arr = Array.from(respon);
+        const cardSectionTwo = new Section({
+          arrayItems: arr,
+          renderer: (cardItem) => {
+            console.log(cardItem);
+            const cardOnly = new Card(cardItem, {
+              selector: '.card-template', handleCardClick: (cardPhoto) => {
+                cardPhoto.addEventListener('click', () => {
+                  popupFull.open(cardPhoto);
+                })
+              }
+            });
+            //-- Наполняем созданный объект данными --//
+            const cardElement = cardOnly.generate();
+            //-- Добавляем готовую карточку в разметку --//
+            cardSectionTwo.addItem(cardElement);
+          }
+        }, '.cards');
+        //-- Отрисовываем карточки с местами --//
+        cardSectionTwo.renderItems();
       })
       .catch(api._printError())
-      .finally(() => renderLoading(false, createCardButton));
+      .finally(() => api.renderLoading(false, createCardButton));
   }
 });
 
@@ -142,10 +159,3 @@ formPlace.addEventListener('submit', function (evt) {
 //validation
 enableValidation(validationSettings);
 
-export function renderLoading(isLoading, button) {
-  if (button.name === 'create-card-button') {
-    button.textContent = isLoading ? 'Сохранение...' : 'Создать'
-  } else {
-    button.textContent = isLoading ? 'Сохранение...' : 'Сохранить'
-  }
-}

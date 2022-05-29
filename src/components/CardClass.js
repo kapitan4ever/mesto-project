@@ -2,8 +2,6 @@
 import { userIdent } from './UserInfo.js';
 import { api } from './index.js';
 
-import { popupFullsize } from './utils.js';
-
 export default class Card {
   //свойства
   constructor({ link, name, likes, owner, _id }, {selector, handleCardClick}) {
