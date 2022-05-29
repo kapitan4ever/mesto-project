@@ -20,6 +20,7 @@ export const profileImage = content.querySelector('.profile__image');
 export const formProfile = document.forms.edit_profile;
 export const popupProfile = page.querySelector('.popup__profile');
 export const popupClose = page.querySelector('.popup__close');
+export const createProfileButton = page.querySelector('.form__submit[name=create-profile-button]');
 //avatar
 export const popupAvatar = page.querySelector('.popup__avatar');
 export const editAvatar = document.querySelector('#edit_avatar');
@@ -54,4 +55,5 @@ export const config = {
     'Content-Type': 'application/json',
   }
 }
+
 

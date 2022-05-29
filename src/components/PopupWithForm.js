@@ -22,8 +22,8 @@ export default class PopupWithForm extends Popup {
 
   close() {
     super.close();//вызываем родительский метод из Popup.js
+    //this._handleFormSubmit(this._getInputValues());
     this._form.reset();//добавляем сброс полей
-
   }
 
   _getInputValues() {
@@ -41,19 +41,12 @@ export default class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners();//добавляет обработчик клика иконке закрытия
+    //добавляет обработчик сабмита формы.
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
-    });//добавляет обработчик сабмита формы.
+      this.close();
+    });
   };
-
-
-  renderLoading(isLoading, button) {
-    if (button.name === 'create-card-button') {
-      button.textContent = isLoading ? 'Сохранение...' : 'Создать'
-    } else {
-      button.textContent = isLoading ? 'Сохранение...' : 'Сохранить'
-    }
-  }
 }
 
