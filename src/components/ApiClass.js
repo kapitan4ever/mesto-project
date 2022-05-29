@@ -11,6 +11,7 @@ export class Api {
     }
     return Promise.reject(`Ошибка ${res.status}`);
   }
+
   _printError(error) {
     console.log(`Ошибка: ${error}`);
   }
@@ -92,5 +93,13 @@ export class Api {
       })
     })
       .then(this._checkResponse)
+  }
+
+  renderLoading(isLoading, button) {
+    if (button.name === 'create-card-button') {
+      button.textContent = isLoading ? 'Сохранение...' : 'Создать'
+    } else {
+      button.textContent = isLoading ? 'Сохранение...' : 'Сохранить'
+    }
   }
 }
