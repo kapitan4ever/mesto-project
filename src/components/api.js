@@ -1,4 +1,6 @@
-export class Api {
+import { config } from './utils.js'
+
+class Api {
   constructor(baseUrl, headers) {
     this.baseUrl = baseUrl;
     this.headers = headers;
@@ -103,3 +105,5 @@ export class Api {
     }
   }
 }
+
+export const api = new Api(config.baseUrl, config.headers);

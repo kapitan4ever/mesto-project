@@ -17,15 +17,18 @@ export default class PopupWithForm extends Popup {
     this._form = popupSelector.querySelector('form');
   }
 
+  //--Открытие попапа с формой --//
   open() {
     super.open();
   }
 
+  //--Закрытие попапа с формой --//
   close() {
     super.close();//вызываем родительский метод из Popup.js
     this._form.reset();//добавляем сброс полей
   }
 
+  //--Получение значений всех полей формы. Возвращает объект со значениями--//
   _getInputValues() {
     // достаём все элементы полей
     this._inputList = this._form.querySelectorAll('.form__input');
@@ -39,6 +42,7 @@ export default class PopupWithForm extends Popup {
     return this._formValues;
   }
 
+  //-- Слушатели на закрытие по нажатию на оверлей и крестик --//
   setEventListeners() {
     super.setEventListeners();//добавляет обработчик клика иконке закрытия
     //добавляет обработчик сабмита формы.
