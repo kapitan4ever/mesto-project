@@ -1,26 +1,19 @@
 import '../pages/index.css';
-import { enableValidation, hideErorrs } from './validate.js';
-import { openPopup, closePopup } from './modal.js';
 import {
   popupProfile, popupCard, popupAvatar, profileEdit,
-  profileAddButton, cardsContainer,
-  formPlace, createCardButton, formProfile,
-  validationSettings, editAvatar, buttonAvatar,
-  profileName, profileDescription, nameInput, jobInput, config, profile, popupImage,
-  popupPlace, popupFullsize, createButtonAvatar, profileAvatar, profileImage, createProfileButton
+  profileAddButton,
+  createCardButton,
+  validationSettings, buttonAvatar,
+  profileName, profileDescription, nameInput, jobInput, config, profile,
+  popupFullsize, createButtonAvatar, profileImage, createProfileButton
 } from './utils';
-import { createCard } from './card.js';
-import { editProfileInfo, editAvatarImg } from './profile.js';
-import { printError, postCard } from './api.js';
-import { Api } from './ApiClass.js';
-import Section from './SectionClass.js';
+import { Api } from './Api.js';
+import Section from './Section.js';
 import { UserInfo } from './UserInfo.js';
-import Popup from './Popup.js';
-import Card from './CardClass';
+import Card from './Card';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
-
-const addPopupButton = popupCard.querySelector('.form__button');
+import { FormValidator } from './FormValidator';
 
 export const api = new Api(config.baseUrl, config.headers);
 
@@ -70,6 +63,9 @@ const avatarPopup = new PopupWithForm({
 
 avatarPopup.setEventListeners();//слушатель аватара
 
+const avatarValidator = new FormValidator(validationSettings, avatarPopup);
+avatarValidator.enableValidation();
+
 const userPopup = new PopupWithForm({
   popupSelector: popupProfile,
   handleFormSubmit: (res) => {
@@ -83,18 +79,20 @@ const userPopup = new PopupWithForm({
       .finally(() => api.renderLoading(false, createProfileButton));
   }
 });
+
 userPopup.setEventListeners();
+
+const profileValidator = new FormValidator(validationSettings, userPopup);
+profileValidator.enableValidation();
 
 const cardPopup = new PopupWithForm({
   popupSelector: popupCard,
-  handleFormSubmit: function handleFormSubmit(res) {
+  handleFormSubmit: (res) => {
     api.renderLoading(true, createCardButton);
     api.postCard(res['name'], res['link'])
-      .then(respon => {
-        console.log(respon);
-        const arr = Array.from(respon);
+      .then((response) => {
         const cardSectionTwo = new Section({
-          arrayItems: arr,
+          arrayItems: response,
           renderer: (cardItem) => {
             console.log(cardItem);
             const cardOnly = new Card(cardItem, {
@@ -106,8 +104,10 @@ const cardPopup = new PopupWithForm({
             });
             //-- Наполняем созданный объект данными --//
             const cardElement = cardOnly.generate();
+            console.log(cardElement);
             //-- Добавляем готовую карточку в разметку --//
             cardSectionTwo.addItem(cardElement);
+            console.log(cardSectionTwo);
           }
         }, '.cards');
         //-- Отрисовываем карточки с местами --//
@@ -120,42 +120,23 @@ const cardPopup = new PopupWithForm({
 
 cardPopup.setEventListeners();
 
+const cardValidator = new FormValidator(validationSettings, cardPopup);
+cardValidator.enableValidation();
+
 profileEdit.addEventListener('click', () => {
-  hideErorrs(popupProfile);
+  profileValidator.hideErorrs();
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
   userPopup.open();
 });
 
 buttonAvatar.addEventListener('click', () => {
-  hideErorrs(popupAvatar);
+  avatarValidator.hideErorrs();
   avatarPopup.open();
 });
 
 //cards
 profileAddButton.addEventListener('click', () => {
+  cardValidator.hideErorrs();
   cardPopup.open();
 });
-
-/*
-//card
-formPlace.addEventListener('submit', function (evt) {
-  evt.preventDefault();
-  renderLoading(true, addPopupButton);
-  const cardName = formPlace.name.value;
-  const cardLink = formPlace.link.value;
-  postCard(cardName, cardLink)
-    .then(card => cardsContainer.prepend(createCard(card, userId)))
-    .then(() => {
-      formPlace.reset();
-      createCardButton.classList.add('popup__button_disabled');
-      createCardButton.disabled = true;
-      this.close(popupCard);
-    })
-    .catch(printError)
-    .finally(() => renderLoading(false, addPopupButton));
-});*/
-
-//validation
-enableValidation(validationSettings);
-
