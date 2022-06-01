@@ -4,14 +4,14 @@ import {
   profileAddButton, createCardButton, validationSettings, buttonAvatar,
   profileName, profileDescription, nameInput, jobInput, profile,
   popupFullsize, createButtonAvatar, profileImage, createProfileButton
-} from './utils';
-import { api } from './Api.js';
-import Section from './Section.js';
-import { UserInfo } from './UserInfo.js';
-import Card from './CardClass.js';
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
-import { FormValidator } from './FormValidator.js';
+} from '../utils/constants.js';
+import { api } from './Api';
+import Section from './Section';
+import { UserInfo } from './UserInfo';
+import Card from './Card';
+import PopupWithImage from './PopupWithImage';
+import PopupWithForm from './PopupWithForm';
+import { FormValidator } from './FormValidator';
 
 const userInfo = new UserInfo(profile);
 userInfo.getUserInfo();
@@ -41,20 +41,22 @@ api.getInitialCards()
   //-- Получили массив карточек с сервера --//
   .then((cards) => {
     sectionCard.renderItems(cards);
-  });
+  })
+  .catch(api.printError());
 
 //-- Создаем объект попапа с формой для редактирования Аватара --//
 const avatarPopup = new PopupWithForm({
-  popupSelector: popupAvatar,
+  popup: popupAvatar,
   //-- Колбэк функция для сабмита форрмы  --//
   handleFormSubmit: (res) => {
-    api.renderLoading(true, createButtonAvatar);
+    avatarPopup.renderLoading(true, createButtonAvatar);
     api.editAvatarProfile(res['avatar-link'])
       .then(res => {
         profileImage.src = res.avatar;
+        avatarPopup.close();
       })
-      .catch(api._printError())
-      .finally(() => api.renderLoading(false, createButtonAvatar));
+      .catch((err) => console.error(err))
+      .finally(() => avatarPopup.renderLoading(false, createButtonAvatar));
   }
 });
 //-- Слушатели на закрытие по нажатию на оверлей и крестик --//
@@ -66,17 +68,18 @@ avatarValidator.enableValidation();
 
 //-- Создаем объект попапа с формой для редактирования пользователя --//
 const userPopup = new PopupWithForm({
-  popupSelector: popupProfile,
+  popup: popupProfile,
   //-- Колбэк функция для сабмита форрмы  --//
   handleFormSubmit: (res) => {
-    api.renderLoading(true, createProfileButton);
+    userPopup.renderLoading(true, createProfileButton);
     api.editProfile(res['name'], res['description'])
       .then(res => {
         profileName.textContent = res.name;
         profileDescription.textContent = res.about;
+        userPopup.close();
       })
-      .catch(api._printError())
-      .finally(() => api.renderLoading(false, createProfileButton));
+      .catch((err) => console.error(err))
+      .finally(() => userPopup.renderLoading(false, createProfileButton));
   }
 });
 
@@ -89,15 +92,16 @@ profileValidator.enableValidation();
 
 //-- Создаем объект попапа с формой для добавления карточки --//
 const cardPopup = new PopupWithForm({
-  popupSelector: popupCard,
+  popup: popupCard,
   handleFormSubmit: (res) => {
-    api.renderLoading(true, createCardButton);
+    cardPopup.renderLoading(true, createCardButton);
     api.postCard(res['name'], res['link'])
       .then((response) => {
         sectionCard.renderItems(response);
+        cardPopup.close();
       })
-      .catch(api._printError())
-      .finally(() => api.renderLoading(false, createCardButton));
+      .catch((err) => console.error(err))
+      .finally(() => cardPopup.renderLoading(false, createCardButton));
   }
 });
 

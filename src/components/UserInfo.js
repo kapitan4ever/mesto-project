@@ -1,5 +1,5 @@
 //-- Импорты --//
-import { api } from './ApiClass.js';
+import { api } from './Api.js';
 
 //-- Экспорты --//
 export let userIdent;
@@ -19,7 +19,8 @@ export class UserInfo {
         this._about.textContent = res.about;
         this._avatar.src = res.avatar;
         userIdent = res._id;
-      });
+      })
+      .catch(api.printError());
   }
 
   //-- Обновляем информацию о пользователе и отрисовываем информацию на страницу --//
@@ -29,7 +30,8 @@ export class UserInfo {
         this.doсument.querySelector(this._name).textContent = res.name;
         this.doсument.querySelector(this._about).textContent = res.about;
         this.doсument.querySelector(this._avatar).src = res.avatar;
-      });
+      })
+      .catch(api.printError());
   }
 }
 

@@ -1,5 +1,5 @@
 import { userIdent } from './UserInfo.js';
-import { api } from './ApiClass.js';
+import { api } from './Api.js';
 
 export default class Card {
   //свойства
@@ -56,7 +56,7 @@ export default class Card {
         .then((res) => {
           evt.target.closest('.card').remove();
         })
-        .catch(api._printError());
+        .catch(api.printError());
     });
   }
 

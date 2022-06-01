@@ -1,7 +1,5 @@
-import { config } from './utils.js'
-
 class Api {
-  constructor(baseUrl, headers) {
+  constructor({ baseUrl, headers }) {
     this.baseUrl = baseUrl;
     this.headers = headers;
   }
@@ -14,7 +12,7 @@ class Api {
     return Promise.reject(`Ошибка ${res.status}`);
   }
 
-  _printError(error) {
+  printError(error) {
     console.log(`Ошибка: ${error}`);
   }
 
@@ -96,14 +94,12 @@ class Api {
     })
       .then(this._checkResponse)
   }
-
-  renderLoading(isLoading, button) {
-    if (button.name === 'create-card-button') {
-      button.textContent = isLoading ? 'Сохранение...' : 'Создать'
-    } else {
-      button.textContent = isLoading ? 'Сохранение...' : 'Сохранить'
-    }
-  }
 }
 
-export const api = new Api(config.baseUrl, config.headers);
+export const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-9',
+  headers: {
+    authorization: 'a4afe3fb-fc08-4be7-8f57-5e8ad24d8399',
+    'Content-Type': 'application/json'
+  }
+});
