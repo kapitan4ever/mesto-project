@@ -5,13 +5,13 @@ import {
   profileName, profileDescription, nameInput, jobInput, profile,
   popupFullsize, createButtonAvatar, profileImage, createProfileButton
 } from '../utils/constants.js';
-import { api } from './Api';
-import Section from './Section';
-import { UserInfo } from './UserInfo';
-import Card from './Card';
-import PopupWithImage from './PopupWithImage';
-import PopupWithForm from './PopupWithForm';
-import { FormValidator } from './FormValidator';
+import { api } from '../components/Api';
+import Section from '../components/Section';
+import { UserInfo } from '../components/UserInfo';
+import Card from '../components/Card';
+import PopupWithImage from '../components/PopupWithImage';
+import PopupWithForm from '../components/PopupWithForm';
+import { FormValidator } from '../components/FormValidator';
 
 const userInfo = new UserInfo(profile);
 userInfo.getUserInfo();
