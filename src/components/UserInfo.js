@@ -1,5 +1,5 @@
 //-- Импорты --//
-import { api } from './Api.js';
+import { api } from './ApiClass.js';
 
 //-- Экспорты --//
 export let userIdent;

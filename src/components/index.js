@@ -8,10 +8,10 @@ import {
 import { api } from './Api.js';
 import Section from './Section.js';
 import { UserInfo } from './UserInfo.js';
-import Card from './Card';
+import Card from './CardClass.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
-import { FormValidator } from './FormValidator';
+import { FormValidator } from './FormValidator.js';
 
 const userInfo = new UserInfo(profile);
 userInfo.getUserInfo();

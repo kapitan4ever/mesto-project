@@ -1,5 +1,5 @@
 import { userIdent } from './UserInfo.js';
-import { api } from './Api.js';
+import { api } from './ApiClass.js';
 
 export default class Card {
   //свойства
