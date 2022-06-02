@@ -1,32 +1,23 @@
-//Создайте класс PopupWithImage, который наследует от Popup.
-//Этот класс должен перезаписывать родительский метод open.
-//В методе open класса PopupWithImage нужно вставлять в попап
-//картинку с src изображения и подписью к картинке.
 import Popup from './Popup.js';
-import { popupImage, popupPlace } from '../utils/constants.js'
 
 export default class PopupWithImage extends Popup {
-  /*constructor(popup) {
-    super(popup);
-  }*/
-
+  constructor(popup) {
+    super(popup); //записывать вначале!
+    this._image = this._popup.querySelector('.popup__image');
+    this._placeTitle = this._popup.querySelector('.popup__place');
+  }
   //--Открытие попапа с картинкой --//
   open(image) {
     super.open();
-    popupImage.src = image.src;
-    popupPlace.textContent = image.alt;
+    this._image.src = image.src;
+    this._placeTitle.textContent = image.alt;
   }
 
   //--Закрытие попапа --//
   close() {
     super.close();
     //-- Для медленного интернета очистим поля при закрытии попапа с картинкой --//
-    popupImage.src = '';
-    popupPlace.textContent = '';
+    this._image.src = '';
+    this._placeTitle.textContent = '';
   }
-
-  //-- Слушатели на закрытие по нажатию на оверлей и крестик --//
-  /*setEventListeners() {
-    super.setEventListeners();
-  }*/
 }
