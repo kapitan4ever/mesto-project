@@ -1,13 +1,11 @@
 import '../pages/index.css';
 import {
   popupProfile, popupCard, popupAvatar, profileEdit,
-  profileAddButton,
-  createCardButton,
-  validationSettings, buttonAvatar,
-  profileName, profileDescription, nameInput, jobInput, config, profile,
+  profileAddButton, createCardButton, validationSettings, buttonAvatar,
+  profileName, profileDescription, nameInput, jobInput, profile,
   popupFullsize, createButtonAvatar, profileImage, createProfileButton
 } from './utils';
-import { Api } from './Api.js';
+import { api } from './Api.js';
 import Section from './Section.js';
 import { UserInfo } from './UserInfo.js';
 import Card from './Card';
@@ -15,114 +13,102 @@ import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
 import { FormValidator } from './FormValidator';
 
-export const api = new Api(config.baseUrl, config.headers);
-
-export const userInfo = new UserInfo(profile);
+const userInfo = new UserInfo(profile);
 userInfo.getUserInfo();
 
 const popupFull = new PopupWithImage(popupFullsize);
 popupFull.setEventListeners();
 
+//=====
+const sectionCard = new Section({ renderer: (cardItem) => createCard(cardItem) }, '.cards');
+//=====
+
+const createCard = (cardItem) => {
+  const card = new Card(cardItem, {
+    selector: '.card-template', handleCardClick: (cardPhoto) => {
+      cardPhoto.addEventListener('click', () => {
+        popupFull.open(cardPhoto);
+      })
+    }
+  });
+  //-- Наполняем созданный объект данными --//
+  const cardElement = card.generate();
+  //-- Добавляем готовую карточку в разметку --//
+  sectionCard.addItem(cardElement);
+}
+
 api.getInitialCards()
   //-- Получили массив карточек с сервера --//
   .then((cards) => {
-    //-- Создаем объект секции куда загружать карточки --//
-    //-- Передаем в контсруктор полученный массив карточек, функцию которая создает объект карточки для вставки--//
-    const cardSection = new Section({
-      arrayItems: cards,
-      renderer: (cardItem) => {
-        const card = new Card(cardItem, {
-          selector: '.card-template', handleCardClick: (cardPhoto) => {
-            cardPhoto.addEventListener('click', () => {
-              popupFull.open(cardPhoto);
-            })
-          }
-        });
-        //-- Наполняем созданный объект данными --//
-        const cardElement = card.generate();
-        //-- Добавляем готовую карточку в разметку --//
-        cardSection.addItem(cardElement);
-      }
-    }, '.cards');
-    //-- Отрисовываем карточки с местами --//
-    cardSection.renderItems();
+    sectionCard.renderItems(cards);
   });
 
+//-- Создаем объект попапа с формой для редактирования Аватара --//
 const avatarPopup = new PopupWithForm({
   popupSelector: popupAvatar,
-  handleFormSubmit: (res) => {
+  //-- Колбэк функция для сабмита форрмы  --//
+  handleFormSubmit: (getInputValues) => {
     api.renderLoading(true, createButtonAvatar);
-    api.editAvatarProfile(res['avatar-link'])
-      .then(res => {
-        profileImage.src = res.avatar;
+    api.editAvatarProfile(getInputValues['avatar-link'])
+      .then(response => {
+        profileImage.src = response.avatar;
       })
       .catch(api._printError())
       .finally(() => api.renderLoading(false, createButtonAvatar));
   }
 });
+//-- Слушатели на закрытие по нажатию на оверлей и крестик --//
+avatarPopup.setEventListeners();
 
-avatarPopup.setEventListeners();//слушатель аватара
-
+//-- Валидация полей формы попапа с аватаром --//
 const avatarValidator = new FormValidator(validationSettings, avatarPopup);
 avatarValidator.enableValidation();
 
+//-- Создаем объект попапа с формой для редактирования пользователя --//
 const userPopup = new PopupWithForm({
   popupSelector: popupProfile,
-  handleFormSubmit: (res) => {
+  //-- Колбэк функция для сабмита форрмы  --//
+  handleFormSubmit: (getInputValues) => {
     api.renderLoading(true, createProfileButton);
-    api.editProfile(res['name'], res['description'])
-      .then(res => {
-        profileName.textContent = res.name;
-        profileDescription.textContent = res.about;
+    api.editProfile(getInputValues['name'], getInputValues['description'])
+      .then(response => {
+        profileName.textContent = response.name;
+        profileDescription.textContent = response.about;
       })
       .catch(api._printError())
       .finally(() => api.renderLoading(false, createProfileButton));
   }
 });
 
+//-- Слушатели на закрытие по нажатию на оверлей и крестик --//
 userPopup.setEventListeners();
 
+//-- Валидация полей формы попапа с пользователем --//
 const profileValidator = new FormValidator(validationSettings, userPopup);
 profileValidator.enableValidation();
 
+//-- Создаем объект попапа с формой для добавления карточки --//
 const cardPopup = new PopupWithForm({
   popupSelector: popupCard,
-  handleFormSubmit: (res) => {
+  handleFormSubmit: (getInputValues) => {
     api.renderLoading(true, createCardButton);
-    api.postCard(res['name'], res['link'])
+    api.postCard(getInputValues['name'], getInputValues['link'])
       .then((response) => {
-        const cardSectionTwo = new Section({
-          arrayItems: response,
-          renderer: (cardItem) => {
-            console.log(cardItem);
-            const cardOnly = new Card(cardItem, {
-              selector: '.card-template', handleCardClick: (cardPhoto) => {
-                cardPhoto.addEventListener('click', () => {
-                  popupFull.open(cardPhoto);
-                })
-              }
-            });
-            //-- Наполняем созданный объект данными --//
-            const cardElement = cardOnly.generate();
-            console.log(cardElement);
-            //-- Добавляем готовую карточку в разметку --//
-            cardSectionTwo.addItem(cardElement);
-            console.log(cardSectionTwo);
-          }
-        }, '.cards');
-        //-- Отрисовываем карточки с местами --//
-        cardSectionTwo.renderItems();
+        sectionCard.renderItems(response);
       })
       .catch(api._printError())
       .finally(() => api.renderLoading(false, createCardButton));
   }
 });
 
+//-- Слушатели на закрытие по нажатию на оверлей и крестик --//
 cardPopup.setEventListeners();
 
+//-- Валидация полей формы попапа с карточкой --//
 const cardValidator = new FormValidator(validationSettings, cardPopup);
 cardValidator.enableValidation();
 
+//-- Слушаетль по клику на кнопку изменения профиля --//
 profileEdit.addEventListener('click', () => {
   profileValidator.hideErorrs();
   nameInput.value = profileName.textContent;
@@ -130,12 +116,13 @@ profileEdit.addEventListener('click', () => {
   userPopup.open();
 });
 
+//-- Слушаетль по клику на кнопку обновления аватара --//
 buttonAvatar.addEventListener('click', () => {
   avatarValidator.hideErorrs();
   avatarPopup.open();
 });
 
-//cards
+//-- Слушаетль по клику на кнопку дабавления карточки --//
 profileAddButton.addEventListener('click', () => {
   cardValidator.hideErorrs();
   cardPopup.open();

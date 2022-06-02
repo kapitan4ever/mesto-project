@@ -1,20 +1,20 @@
 export default class Section {
-  constructor({ arrayItems, renderer }, selector) {
-    this._renderedItems = arrayItems;
+  constructor({ renderer }, selector) {
     this._renderer = renderer;
     this._container = document.querySelector(selector);
   }
-
+  //-- метод addItem принимает в себя данные одной карточки --//
   addItem(element) {
-    this._container.append(element);
+    this._container.prepend(element);
   }
 
-  renderItems() {
-    if (this._renderedItems.length > 1) {
-      this._renderedItems.forEach(item => this._renderer(item));
+  //-- Вызывает колбэк функцию в конструкторе и передает карточку --//
+  renderItems(cards) {
+    if (cards.length > 1) {
+      cards.reverse().forEach(item => this._renderer(item));
     }
     else {
-      this._renderer(this._renderedItems);
+      this._renderer(cards);
     }
   }
 }

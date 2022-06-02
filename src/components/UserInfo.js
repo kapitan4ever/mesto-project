@@ -1,6 +1,9 @@
-import { api } from './index.js';
+//-- Импорты --//
+import { api } from './Api.js';
 
+//-- Экспорты --//
 export let userIdent;
+
 export class UserInfo {
   constructor(data) {
     this._name = data.querySelector('.profile__title');
@@ -8,6 +11,7 @@ export class UserInfo {
     this._avatar = data.querySelector('.profile__image');
   }
 
+  //-- Получаем информацию о пользователе и отрисовываем информацию на страницу --//
   getUserInfo() {
     api.getUserInfo()
       .then(res => {
@@ -18,6 +22,7 @@ export class UserInfo {
       });
   }
 
+  //-- Обновляем информацию о пользователе и отрисовываем информацию на страницу --//
   setUserInfo() {
     api.editProfile()
       .then((res) => {
@@ -27,3 +32,4 @@ export class UserInfo {
       });
   }
 }
+
