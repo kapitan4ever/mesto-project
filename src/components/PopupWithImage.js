@@ -3,12 +3,12 @@
 //В методе open класса PopupWithImage нужно вставлять в попап
 //картинку с src изображения и подписью к картинке.
 import Popup from './Popup.js';
-import { popupImage, popupPlace } from './utils'
+import { popupImage, popupPlace } from '../utils/constants.js'
 
 export default class PopupWithImage extends Popup {
-  constructor(popupSelector) {
-    super(popupSelector);
-  }
+  /*constructor(popup) {
+    super(popup);
+  }*/
 
   //--Открытие попапа с картинкой --//
   open(image) {
@@ -26,7 +26,7 @@ export default class PopupWithImage extends Popup {
   }
 
   //-- Слушатели на закрытие по нажатию на оверлей и крестик --//
-  setEventListeners() {
+  /*setEventListeners() {
     super.setEventListeners();
-  }
+  }*/
 }

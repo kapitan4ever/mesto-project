@@ -6,8 +6,8 @@
 //Модальное окно также закрывается при клике на затемнённую область вокруг формы.
 
 export default class Popup {
-  constructor(popupSelector) {
-    this._popup = popupSelector;
+  constructor(popup) {
+    this._popup = popup;
     this._handleEscClose = this._handleEscClose.bind(this);
   }
 

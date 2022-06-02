@@ -11,16 +11,16 @@
 import Popup from './Popup.js';
 
 export default class PopupWithForm extends Popup {
-  constructor({ popupSelector, handleFormSubmit }) {
-    super(popupSelector);//записывать вначале!
+  constructor({ popup, handleFormSubmit }) {
+    super(popup);//записывать вначале!
     this._handleFormSubmit = handleFormSubmit; //колбэк сабмита формы
-    this._form = popupSelector.querySelector('form');
+    this._form = popup.querySelector('form');
   }
 
   //--Открытие попапа с формой --//
-  open() {
+  /*open() {
     super.open();
-  }
+  }*/
 
   //--Закрытие попапа с формой --//
   close() {
@@ -49,8 +49,15 @@ export default class PopupWithForm extends Popup {
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
-      this.close();
     });
   };
+
+  renderLoading(isLoading, button) {
+    if (button.name === 'create-card-button') {
+      button.textContent = isLoading ? 'Сохранение...' : 'Создать'
+    } else {
+      button.textContent = isLoading ? 'Сохранение...' : 'Сохранить'
+    }
+  }
 }
 
