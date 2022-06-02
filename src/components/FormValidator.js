@@ -1,9 +1,9 @@
 export default class FormValidator {
-  constructor({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass }, { _popup }) {
-    this.elemForm = _popup;
+  constructor({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass }, formEl) {
+    this.elemForm = formEl;
     this.formSelector = formSelector;
     this.inputSelector = inputSelector;
-    this.submitButton = _popup.querySelector(submitButtonSelector);
+    this.submitButton = this.elemForm.querySelector(submitButtonSelector);
     this.inactiveButtonClass = inactiveButtonClass;
     this.inputErrorClass = inputErrorClass;
     this.errorClass = errorClass;
@@ -82,10 +82,9 @@ export default class FormValidator {
   hideErorrs = () => {
     this.submitButton.classList.add(this.inactiveButtonClass);
     this.submitButton.disabled = true;
-    const formElement = this.elemForm.querySelector(this.formSelector);
-    const inputList = formElement.querySelectorAll(this.inputSelector);
+    const inputList = this.elemForm.querySelectorAll(this.inputSelector);
     inputList.forEach((inputElement) => {
-      this._hideInputError(formElement, inputElement);
+      this._hideInputError(this.elemForm, inputElement);
     });
   };
 }
