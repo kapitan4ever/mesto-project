@@ -59,12 +59,26 @@ const avatarPopup = new PopupWithForm({
       .finally(() => avatarPopup.renderLoading(false, createButtonAvatar));
   }
 });
+
 //-- Слушатели на закрытие по нажатию на оверлей и крестик --//
 avatarPopup.setEventListeners();
 
-//-- Валидация полей формы попапа с аватаром --//
-const avatarValidator = new FormValidator(validationSettings, avatarPopup);
-avatarValidator.enableValidation();
+// Включение валидации
+const formValidators = {};
+
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement)
+    // получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute('name')
+    // вот тут в объект записываем под именем формы
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(validationSettings);
 
 //-- Создаем объект попапа с формой для редактирования пользователя --//
 const userPopup = new PopupWithForm({
@@ -85,10 +99,6 @@ const userPopup = new PopupWithForm({
 //-- Слушатели на закрытие по нажатию на оверлей и крестик --//
 userPopup.setEventListeners();
 
-//-- Валидация полей формы попапа с пользователем --//
-const profileValidator = new FormValidator(validationSettings, userPopup);
-profileValidator.enableValidation();
-
 //-- Создаем объект попапа с формой для добавления карточки --//
 const cardPopup = new PopupWithForm({
   popup: popupCard,
@@ -107,13 +117,9 @@ const cardPopup = new PopupWithForm({
 //-- Слушатели на закрытие по нажатию на оверлей и крестик --//
 cardPopup.setEventListeners();
 
-//-- Валидация полей формы попапа с карточкой --//
-const cardValidator = new FormValidator(validationSettings, cardPopup);
-cardValidator.enableValidation();
-
 //-- Слушаетль по клику на кнопку изменения профиля --//
 profileEdit.addEventListener('click', () => {
-  profileValidator.hideErorrs();
+  formValidators['edit_profile'].hideErorrs();
   nameInput.value = userInfo.getUserInfo().name;
   jobInput.value = userInfo.getUserInfo().about;
   userPopup.open();
@@ -121,12 +127,12 @@ profileEdit.addEventListener('click', () => {
 
 //-- Слушаетль по клику на кнопку обновления аватара --//
 buttonAvatar.addEventListener('click', () => {
-  avatarValidator.hideErorrs();
+  formValidators['edit_avatar'].hideErorrs();
   avatarPopup.open();
 });
 
 //-- Слушаетль по клику на кнопку дабавления карточки --//
 profileAddButton.addEventListener('click', () => {
-  cardValidator.hideErorrs();
+  formValidators['card'].hideErorrs();
   cardPopup.open();
 });
