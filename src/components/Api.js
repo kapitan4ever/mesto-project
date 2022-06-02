@@ -16,7 +16,7 @@ class Api {
     console.log(`Ошибка: ${error}`);
   }
 
-  getUserInfo = () => {
+  getUserData = () => {
     return fetch(`${this.baseUrl}/users/me`, {
       headers: this.headers
     })

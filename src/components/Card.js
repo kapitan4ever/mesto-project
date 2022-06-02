@@ -1,4 +1,4 @@
-import { userIdent } from './UserInfo.js';
+import { userId } from '../pages/index.js';
 import { api } from './Api.js';
 
 export default class Card {
@@ -31,15 +31,14 @@ export default class Card {
     this.cardPhoto.setAttribute('src', this._image);
     this.cardPhoto.setAttribute('alt', this._name);
 
-    if (this._likes.some(like => like._id === userIdent)) {
+    if (this._likes.some(like => like._id === userId)) {
       this.cardLike.classList.add('card__like_active');
     }
-    if (this._owner !== userIdent) {
+    if (this._owner !== userId) {
       this.deleteButton.remove();
     }
     this.cardLikeCount.textContent = this._likes.length;
     this._setEventListeners();
-    this._handleCardClick(this.cardPhoto);
     return this._elementCard;
   }
 
@@ -47,16 +46,15 @@ export default class Card {
   _setEventListeners() {
     this._isLiked();
     this._removedCard();
+    this._handleCardClick(this.cardPhoto);
   }
 
-  //-- Уд-лени- карточки //
+  //-- Удаление карточки //
   _removedCard() {
     this.deleteButton.addEventListener('click', (evt) => {
       api.deleteCard(this._cardId)
-        .then((res) => {
-          evt.target.closest('.card').remove();
-        })
-        .catch(api.printError());
+        .then(() => evt.target.closest('.card').remove())
+        .catch(api.printError);
     });
   }
 
@@ -65,18 +63,18 @@ export default class Card {
     this.cardLike.addEventListener('click', () => {
       if (this.cardLike.classList.contains('card__like_active')) {
         api.deleteLike(this._cardId)
-          .then(res => {
-            this.cardLikeCount.textContent = res.likes.length;
+          .then(response => {
+            this.cardLikeCount.textContent = response.likes.length;
             this.cardLike.classList.remove('card__like_active');
           })
-          .catch(err => console.error(err))
+          .catch(api.printError)
       } else {
         api.addLike(this._cardId)
-          .then(res => {
-            this.cardLikeCount.textContent = res.likes.length;
+          .then(response => {
+            this.cardLikeCount.textContent = response.likes.length;
             this.cardLike.classList.add('card__like_active');
           })
-          .catch(err => console.error(err))
+          .catch(api.printError)
       }
     });
   }
