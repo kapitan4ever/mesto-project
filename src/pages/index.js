@@ -34,12 +34,7 @@ Promise.all([api.getUserData(), api.getInitialCards()])
 
 const createCard = (cardItem) => {
   const card = new Card(cardItem, {
-    selector: '.card-template', userId: userId, apiObj: api, handleCardClick: (cardPhoto) => {
-      cardPhoto.addEventListener('click', () => {
-        popupFull.open(cardPhoto);
-      })
-    }
-  });
+    selector: '.card-template', userId: userId, apiObj: api, popupFullSize: popupFull});
   //-- Наполняем созданный объект данными --//
   const cardElement = card.generate();
   //-- Добавляем готовую карточку в разметку --//

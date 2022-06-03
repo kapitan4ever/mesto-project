@@ -1,6 +1,6 @@
 export default class Card {
   //свойства
-  constructor({ link, name, likes, owner, _id }, { selector, userId, apiObj, handleCardClick }) {
+  constructor({ link, name, likes, owner, _id }, { selector, userId, apiObj, popupFullSize }) {
     this._selector = selector;
     this._image = link;
     this._name = name;
@@ -9,7 +9,8 @@ export default class Card {
     this._cardId = _id;
     this.userId = userId;
     this._api = apiObj;
-    this._handleCardClick = handleCardClick;
+    //this._handleCardClick = handleCardClick;
+    this._popup = popupFullSize;
   }
 
   //-- Возвращает разметку черновика карточки --//
@@ -45,7 +46,9 @@ export default class Card {
   _setEventListeners() {
     this._setLikeHandler();
     this._setDeleteHandler();
-    this._handleCardClick(this.cardPhoto);
+    this.cardPhoto.addEventListener('click', () => {
+      this._popup.open(this.cardPhoto);
+    })
   }
 
   //-- Удаление карточки //
