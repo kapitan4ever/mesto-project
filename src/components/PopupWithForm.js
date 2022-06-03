@@ -6,6 +6,7 @@ export default class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit; //колбэк сабмита формы
     this._form = popup.querySelector('form');
     this._inputList = this._form.querySelectorAll('.form__input');
+    this._submitButton = this._form.querySelector('.popup__button_create');
   }
 
   //--Закрытие попапа с формой --//
@@ -36,11 +37,12 @@ export default class PopupWithForm extends Popup {
     });
   };
 
-  renderLoading(isLoading, button) {
-    if (button.name === 'create-card-button') {
-      button.textContent = isLoading ? 'Сохранение...' : 'Создать'
-    } else {
-      button.textContent = isLoading ? 'Сохранение...' : 'Сохранить'
+  renderLoading(isLoading, defaultButtonText) {
+    if (isLoading) {
+      this._submitButton.textContent = 'Сохранение...';
+    }
+    else {
+      this._submitButton.textContent = defaultButtonText;
     }
   }
 }

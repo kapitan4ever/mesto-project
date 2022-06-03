@@ -1,5 +1,3 @@
-import { popupFullsize } from "../utils/constants";
-
 export default class Card {
   //свойства
   constructor({ link, name, likes, owner, _id }, { selectorTemplate, userId, apiObj, popupFullSize }) {

@@ -1,9 +1,9 @@
 import '../pages/index.css';
 import {
   popupProfile, popupCard, popupAvatar, profileEdit,
-  profileAddButton, createCardButton, validationSettings, buttonAvatar,
-  nameInput, jobInput, profile,
-  popupFullsize, createButtonAvatar, profileImage, createProfileButton, config
+  profileAddButton, validationSettings, buttonAvatar,
+  nameInput, jobInput,
+  popupFullsize, profileImage, config
 } from '../utils/constants.js';
 import Api from '../components/Api.js';
 import Section from '../components/Section';
@@ -15,7 +15,13 @@ import FormValidator from '../components/FormValidator';
 
 const api = new Api(config);
 
-export const userInfo = new UserInfo(profile);
+const userInfoSelectors = {
+  avatarSelector: '.profile__image',
+  usernameSelector: '.profile__title',
+  aboutUsernameSelector: '.profile__description'
+};
+
+const userInfo = new UserInfo(userInfoSelectors);
 
 const popupFull = new PopupWithImage(popupFullsize);
 popupFull.setEventListeners();
@@ -34,7 +40,8 @@ Promise.all([api.getUserData(), api.getInitialCards()])
 
 const createCard = (cardItem) => {
   const card = new Card(cardItem, {
-    selectorTemplate: '.card-template', userId: userId, apiObj: api, popupFullSize: popupFull})
+    selectorTemplate: '.card-template', userId: userId, apiObj: api, popupFullSize: popupFull
+  })
   //-- Наполняем созданный объект данными --//
   const cardElement = card.generate();
   //-- Добавляем готовую карточку в разметку --//
@@ -46,14 +53,14 @@ const avatarPopup = new PopupWithForm({
   popup: popupAvatar,
   //-- Колбэк функция для сабмита форрмы  --//
   handleFormSubmit: (resultInputsForm) => {
-    avatarPopup.renderLoading(true, createButtonAvatar);
+    avatarPopup.renderLoading(true);
     api.editAvatarProfile(resultInputsForm['avatar-link'])
       .then((response) => {
-        profileImage.src = response.avatar;
+        userInfo.setUserInfo(response);
         avatarPopup.close();
       })
       .catch(api.printError)
-      .finally(() => avatarPopup.renderLoading(false, createButtonAvatar));
+      .finally(() => avatarPopup.renderLoading(false, 'Обновить'));
   }
 });
 
@@ -82,14 +89,14 @@ const userPopup = new PopupWithForm({
   popup: popupProfile,
   //-- Колбэк функция для сабмита форрмы  --//
   handleFormSubmit: (resultInputsForm) => {
-    userPopup.renderLoading(true, createProfileButton);
+    userPopup.renderLoading(true);
     api.editProfile(resultInputsForm['name'], resultInputsForm['description'])
       .then(res => {
         userInfo.setUserInfo(res);
         userPopup.close();
       })
       .catch(api.printError)
-      .finally(() => userPopup.renderLoading(false, createProfileButton));
+      .finally(() => userPopup.renderLoading(false, 'Сохранить'));
   }
 });
 
@@ -100,14 +107,14 @@ userPopup.setEventListeners();
 const cardPopup = new PopupWithForm({
   popup: popupCard,
   handleFormSubmit: (resultInputsForm) => {
-    cardPopup.renderLoading(true, createCardButton);
+    cardPopup.renderLoading(true);
     api.postCard(resultInputsForm['name'], resultInputsForm['link'])
       .then((response) => {
         sectionCard.renderItems(response);
         cardPopup.close();
       })
       .catch(api.printError)
-      .finally(() => cardPopup.renderLoading(false, createCardButton));
+      .finally(() => cardPopup.renderLoading(false, 'Создать'));
   }
 });
 
@@ -117,8 +124,9 @@ cardPopup.setEventListeners();
 //-- Слушаетль по клику на кнопку изменения профиля --//
 profileEdit.addEventListener('click', () => {
   formValidators['edit_profile'].hideErorrs();
-  nameInput.value = userInfo.getUserInfo().name;
-  jobInput.value = userInfo.getUserInfo().about;
+  const { name, about } = userInfo.getUserInfo();
+  nameInput.value = name;
+  jobInput.value = about;
   userPopup.open();
 });
 

@@ -1,8 +1,8 @@
 export default class UserInfo {
-  constructor(data) {
-    this._name = data.querySelector('.profile__title');
-    this._about = data.querySelector('.profile__description');
-    this._avatar = data.querySelector('.profile__image');
+  constructor({avatarSelector, usernameSelector, aboutUsernameSelector}) {
+    this._name = document.querySelector(usernameSelector);
+    this._about = document.querySelector(aboutUsernameSelector);
+    this._avatar = document.querySelector(avatarSelector);
   }
 
   //-- Получаем информацию о пользователе и отрисовываем информацию на страницу --//
@@ -19,6 +19,6 @@ export default class UserInfo {
     this._name.textContent = userData.name;
     this._about.textContent = userData.about;
     this._avatar.src = userData.avatar;
-    this._avatar.alt = userData.name;
+    this._avatar.alt = `Фото профиля ${userData.name}`;
   }
 }
