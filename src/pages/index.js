@@ -3,15 +3,17 @@ import {
   popupProfile, popupCard, popupAvatar, profileEdit,
   profileAddButton, createCardButton, validationSettings, buttonAvatar,
   nameInput, jobInput, profile,
-  popupFullsize, createButtonAvatar, profileImage, createProfileButton
+  popupFullsize, createButtonAvatar, profileImage, createProfileButton, config
 } from '../utils/constants.js';
-import { api } from '../components/Api';
+import Api from '../components/Api.js';
 import Section from '../components/Section';
 import UserInfo from '../components/UserInfo';
 import Card from '../components/Card';
 import PopupWithImage from '../components/PopupWithImage';
 import PopupWithForm from '../components/PopupWithForm';
 import FormValidator from '../components/FormValidator';
+
+const api = new Api(config);
 
 export const userInfo = new UserInfo(profile);
 
@@ -21,7 +23,7 @@ popupFull.setEventListeners();
 //=====
 const sectionCard = new Section({ renderer: (cardItem) => createCard(cardItem) }, '.cards');
 //=====
-export let userId;
+let userId;
 Promise.all([api.getUserData(), api.getInitialCards()])
   .then(([userData, cards]) => {
     userId = userData._id;
@@ -32,7 +34,7 @@ Promise.all([api.getUserData(), api.getInitialCards()])
 
 const createCard = (cardItem) => {
   const card = new Card(cardItem, {
-    selector: '.card-template', handleCardClick: (cardPhoto) => {
+    selector: '.card-template', userId: userId, apiObj: api, handleCardClick: (cardPhoto) => {
       cardPhoto.addEventListener('click', () => {
         popupFull.open(cardPhoto);
       })

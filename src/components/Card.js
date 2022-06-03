@@ -1,15 +1,14 @@
-import { userId } from '../pages/index.js';
-import { api } from './Api.js';
-
 export default class Card {
   //свойства
-  constructor({ link, name, likes, owner, _id }, { selector, handleCardClick }) {
+  constructor({ link, name, likes, owner, _id }, { selector, userId, apiObj, handleCardClick }) {
     this._selector = selector;
     this._image = link;
     this._name = name;
     this._likes = likes;
     this._owner = owner._id;
     this._cardId = _id;
+    this.userId = userId;
+    this._api = apiObj;
     this._handleCardClick = handleCardClick;
   }
 
@@ -31,10 +30,10 @@ export default class Card {
     this.cardPhoto.setAttribute('src', this._image);
     this.cardPhoto.setAttribute('alt', this._name);
 
-    if (this._likes.some(like => like._id === userId)) {
+    if (this._likes.some(like => like._id === this.userId)) {
       this.cardLike.classList.add('card__like_active');
     }
-    if (this._owner !== userId) {
+    if (this._owner !== this.userId) {
       this.deleteButton.remove();
     }
     this.cardLikeCount.textContent = this._likes.length;
@@ -44,37 +43,37 @@ export default class Card {
 
   //-- Установка сллушаетелей для ллайков, удаления карточки --//
   _setEventListeners() {
-    this._isLiked();
-    this._removedCard();
+    this._setLikeHandler();
+    this._setDeleteHandler();
     this._handleCardClick(this.cardPhoto);
   }
 
   //-- Удаление карточки //
-  _removedCard() {
+  _setDeleteHandler() {
     this.deleteButton.addEventListener('click', (evt) => {
-      api.deleteCard(this._cardId)
+      this._api.deleteCard(this._cardId)
         .then(() => evt.target.closest('.card').remove())
-        .catch(api.printError);
+        .catch(this._api.printError);
     });
   }
 
   //-- Слушат-ль клика по лайку -//
-  _isLiked() {
+  _setLikeHandler() {
     this.cardLike.addEventListener('click', () => {
       if (this.cardLike.classList.contains('card__like_active')) {
-        api.deleteLike(this._cardId)
+        this._api.deleteLike(this._cardId)
           .then(response => {
             this.cardLikeCount.textContent = response.likes.length;
             this.cardLike.classList.remove('card__like_active');
           })
-          .catch(api.printError)
+          .catch(this._api.printError)
       } else {
-        api.addLike(this._cardId)
+        this._api.addLike(this._cardId)
           .then(response => {
             this.cardLikeCount.textContent = response.likes.length;
             this.cardLike.classList.add('card__like_active');
           })
-          .catch(api.printError)
+          .catch(this._api.printError)
       }
     });
   }
