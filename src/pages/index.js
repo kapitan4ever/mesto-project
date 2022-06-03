@@ -34,7 +34,7 @@ Promise.all([api.getUserData(), api.getInitialCards()])
 
 const createCard = (cardItem) => {
   const card = new Card(cardItem, {
-    selector: '.card-template', userId: userId, apiObj: api, handleCardClick: (cardPhoto) => {
+    selectorTemplate: '.card-template', userId: userId, apiObj: api, handleCardClick: (cardPhoto) => {
       cardPhoto.addEventListener('click', () => {
         popupFull.open(cardPhoto);
       })

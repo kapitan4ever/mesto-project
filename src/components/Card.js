@@ -1,13 +1,13 @@
 export default class Card {
   //свойства
-  constructor({ link, name, likes, owner, _id }, { selector, userId, apiObj, handleCardClick }) {
-    this._selector = selector;
+  constructor({ link, name, likes, owner, _id }, { selectorTemplate, userId, apiObj, handleCardClick }) {
+    this._selector = selectorTemplate;
     this._image = link;
     this._name = name;
     this._likes = likes;
     this._owner = owner._id;
     this._cardId = _id;
-    this.userId = userId;
+    this._userId = userId;
     this._api = apiObj;
     this._handleCardClick = handleCardClick;
   }
@@ -30,10 +30,10 @@ export default class Card {
     this.cardPhoto.setAttribute('src', this._image);
     this.cardPhoto.setAttribute('alt', this._name);
 
-    if (this._likes.some(like => like._id === this.userId)) {
+    if (this._likes.some(like => like._id === this._userId)) {
       this.cardLike.classList.add('card__like_active');
     }
-    if (this._owner !== this.userId) {
+    if (this._owner !== this._userId) {
       this.deleteButton.remove();
     }
     this.cardLikeCount.textContent = this._likes.length;
