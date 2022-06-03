@@ -1,6 +1,8 @@
+import { popupFullsize } from "../utils/constants";
+
 export default class Card {
   //свойства
-  constructor({ link, name, likes, owner, _id }, { selectorTemplate, userId, apiObj, handleCardClick }) {
+  constructor({ link, name, likes, owner, _id }, { selectorTemplate, userId, apiObj, popupFullSize }) {
     this._selector = selectorTemplate;
     this._image = link;
     this._name = name;
@@ -9,7 +11,7 @@ export default class Card {
     this._cardId = _id;
     this._userId = userId;
     this._api = apiObj;
-    this._handleCardClick = handleCardClick;
+    this._popupFullSize = popupFullSize;
   }
 
   //-- Возвращает разметку черновика карточки --//
@@ -45,7 +47,9 @@ export default class Card {
   _setEventListeners() {
     this._setLikeHandler();
     this._setDeleteHandler();
-    this._handleCardClick(this.cardPhoto);
+    this.cardPhoto.addEventListener('click', () => {
+      this._popupFullSize.open(this.cardPhoto);
+    })
   }
 
   //-- Удаление карточки //
