@@ -60,7 +60,7 @@ const avatarPopup = new PopupWithForm({
         avatarPopup.close();
       })
       .catch(api.printError)
-      .finally(() => avatarPopup.renderLoading(false, 'Обновить'));
+      .finally(() => avatarPopup.renderLoading(false, 'Сохранить'));
   }
 });
 
