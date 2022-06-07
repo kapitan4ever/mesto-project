@@ -10,6 +10,7 @@ export const validationSettings = {
   errorClass: 'popup__input-error_active'
 };
 //profile
+export const profile = page.querySelector('.profile');
 export const profileEdit = page.querySelector('.profile__edit');
 export const profileAddButton = page.querySelector('.profile__add-button');
 export const profileName = page.querySelector('.profile__title');
@@ -19,6 +20,7 @@ export const profileImage = content.querySelector('.profile__image');
 export const formProfile = document.forms.edit_profile;
 export const popupProfile = page.querySelector('.popup__profile');
 export const popupClose = page.querySelector('.popup__close');
+export const createProfileButton = page.querySelector('.form__submit[name=create-profile-button]');
 //avatar
 export const popupAvatar = page.querySelector('.popup__avatar');
 export const editAvatar = document.querySelector('#edit_avatar');
@@ -46,3 +48,10 @@ export const closeImg = document.querySelector('.popup__close_img');
 export const cardsContainer = page.querySelector('.cards');
 export const cardTemplate = document.querySelector('.card-template').content;
 
+export const config = {
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-9',
+  headers: {
+    authorization: 'a4afe3fb-fc08-4be7-8f57-5e8ad24d8399',
+    'Content-Type': 'application/json',
+  }
+}
