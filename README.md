@@ -9,6 +9,8 @@
 html, css, БЭМ, pixelperfect, javascript, webpack
 
 [Ссылка на github партнера](https://github.com/Shoomec74)
+
 [Ссылка на email партнера](sh00mec@yandex.ru)
+
 =======
 [gh-pages](https://kapitan4ever.github.io/mesto-project)
