@@ -13,5 +13,7 @@ html, css, БЭМ, pixelperfect, javascript, webpack
 [Ссылка на email партнера](sh00mec@yandex.ru)
 
 =======
+
 Для просмотра проекта перейдите по ссылке ниже
+
 [gh-pages](https://kapitan4ever.github.io/mesto-project)
